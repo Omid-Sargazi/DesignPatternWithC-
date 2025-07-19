@@ -1,4 +1,5 @@
 ﻿using CopositionPattern.CompositionPattern;
+using CopositionPattern.DecoratorPattern;
 
 public class Program
 {
@@ -8,5 +9,7 @@ public class Program
         CompositeClient.Display();
 
         DisplayCompanyEmployee.Run();
+
+        ClientCoffee.Run();
     }
 }
