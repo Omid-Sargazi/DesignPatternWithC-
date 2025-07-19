@@ -6,5 +6,7 @@ public class Program
     {
         Console.WriteLine("Hello");
         CompositeClient.Display();
+
+        DisplayCompanyEmployee.Run();
     }
 }
