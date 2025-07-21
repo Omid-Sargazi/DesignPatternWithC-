@@ -26,4 +26,41 @@ namespace PatternsInCSharp.BridgePattern
             throw new NotImplementedException();
         }
     }
+
+    public abstract class Message
+    {
+        protected INotificationChannel _channel;
+        protected Message(INotificationChannel channel)
+        {
+            _channel = channel;
+        }
+
+        public abstract void Send(string message);
+    }
+
+    public class AlertMessage : Message
+    {
+      
+        public AlertMessage(INotificationChannel channel) : base(channel)
+        {
+           
+        }
+
+        public override void Send(string message)
+        {
+            _channel.Send(message);
+        }
+    }
+
+    public class PromotionMessage : Message
+    {
+        public PromotionMessage(INotificationChannel channel) : base(channel)
+        {
+        }
+
+        public override void Send(string message)
+        {
+            _channel.Send(message);
+        }
+    }
 }
