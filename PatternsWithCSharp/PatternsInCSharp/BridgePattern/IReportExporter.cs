@@ -37,4 +37,28 @@ namespace PatternsInCSharp.BridgePattern
 
         public abstract void Generate(string content);
     }
+
+    public class SalesReport : Report
+    {
+        public SalesReport(IReportExporter exporter) : base(exporter)
+        {
+        }
+
+        public override void Generate(string content)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class InventoryReport : Report
+    {
+        public InventoryReport(IReportExporter exporter) : base(exporter)
+        {
+        }
+
+        public override void Generate(string content)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
