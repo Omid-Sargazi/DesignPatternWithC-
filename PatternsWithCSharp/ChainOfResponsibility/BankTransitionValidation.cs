@@ -35,4 +35,22 @@ namespace PatternsWithCSharp.ChainOfResponsibility
             return true;
         }
     }
+
+    public class HandleBankTransition
+    {
+        public static void Run()
+        {
+            var blacklistedAccounts = new List<string> { "9999", "1234" };
+            var txValidator = new BankTransitionValidation()
+                .AddRules(tx => tx.Amount <= tx.Balance)
+                .AddRules(tx => tx.Amount <= 10000)
+                .AddRules(tx => blacklistedAccounts.Contains(tx.DestinationAccount));
+
+            var tx1 = new BankTransaction { Amount = 5000, Balance = 6000, DestinationAccount = "5678" };
+            var tx2 = new BankTransaction { Amount = 15000, Balance = 6000, DestinationAccount = "1234" };
+
+            txValidator.Validate(tx1);
+            txValidator.Validate(tx2);
+        }
+    }
 }
