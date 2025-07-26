@@ -15,16 +15,21 @@ namespace DesignPattern.MediatorPattern
         void SendMessage(string message, IUser recipient);
     }
 
-    public interface IChatRoom
+    public interface IChatRoomOffice
     {
         void RegisterUser(IUser user);
         void SendMessage(string message, IUser sender, IUser recipient);
         void SendGroupMessage(string message, IUser sender);
     }
 
-    public class ChatRoom : IChatRoom
+    public class ChatRoomOffice : IChatRoomOffice
     {
         private readonly List<IUser> _users = new List<IUser>();
+
+        public ChatRoomOffice()
+        {
+        }
+
         public void RegisterUser(IUser user)
         {
             _users.Add(user);
@@ -47,8 +52,8 @@ namespace DesignPattern.MediatorPattern
 
     public class User : IUser
     {
-        private readonly IChatRoom _chatRoom;
-        public User(IChatRoom chatRoom, string name)
+        private readonly IChatRoomOffice _chatRoom;
+        public User(IChatRoomOffice chatRoom, string name)
         {
             _chatRoom = chatRoom;
             Name = name;
@@ -76,7 +81,7 @@ namespace DesignPattern.MediatorPattern
     {
         public static void Run()
         {
-            IChatRoom chatRoom = new ChatRoom();
+            IChatRoomOffice chatRoom = new ChatRoomOffice();
             IUser user1 = new User(chatRoom, "Omid");
             IUser user2 = new User(chatRoom, "saeed");
             IUser user3 = new User(chatRoom, "vahid");
