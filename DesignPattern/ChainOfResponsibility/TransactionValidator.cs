@@ -47,7 +47,7 @@ namespace DesignPattern.ChainOfResponsibility
             var tx2 = new Transaction { Amount = 15000, Balance = 6000, DestinationAccount = "1234" };
 
             var txValidator = new TransactionValidator()
-                .AddRule(tx => tx.Amount <= e.Balance)
+                .AddRule(tx => tx.Amount <= tx1.Balance)
                 .AddRule(tx => tx.Amount <= 1000)
                 .AddRule(tx => blacklistedAccounts.Contains(tx.DestinationAccount));
 
