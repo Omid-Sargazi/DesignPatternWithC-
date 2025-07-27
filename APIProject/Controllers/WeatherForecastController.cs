@@ -35,5 +35,10 @@ namespace APIProject.Controllers
         {
             throw new Exception("this is a test exception");
         }
+        [HttpGet("datetime")]
+        public IActionResult GetDate()
+        {
+            return Ok(DateTime.Now.ToString("D"));
+        }
     }
 }

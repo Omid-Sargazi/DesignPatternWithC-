@@ -20,6 +20,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<RequestTimingMiddleware>();
 app.UseMiddleware<JwtValidationMiddleware>();
 //app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 
