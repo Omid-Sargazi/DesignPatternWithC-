@@ -34,5 +34,50 @@ namespace DesignPattern.BridgePattern
         }
     }
 
-    
+    public abstract class Shape
+    {
+        protected IRenderEngine _renderEngine;
+        protected Shape(IRenderEngine engine)
+        {
+            _renderEngine = engine;
+        }
+
+        public abstract void Draw();
+    }
+
+    public class Circle : Shape
+    {
+        public Circle(IRenderEngine engine) : base(engine)
+        {
+        }
+
+        public override void Draw()
+        {
+            _renderEngine.RenderShape("Circle");
+        }
+    }
+
+    public class Square : Shape
+    {
+        public Square(IRenderEngine engine) : base(engine)
+        {
+        }
+
+        public override void Draw()
+        {
+            _renderEngine.RenderShape("Square");
+        }
+    }
+
+    public class Triangle : Shape
+    {
+        public Triangle(IRenderEngine engine) : base(engine)
+        {
+        }
+
+        public override void Draw()
+        {
+            _renderEngine.RenderShape("Triangle");
+        }
+    }
 }
