@@ -48,11 +48,11 @@ namespace DesignPattern.BridgePattern
 
     public class WebPaymentManager : PaymentManager
     {
-        private readonly decimal _amount;
        
-        public WebPaymentManager(decimal amount,IPaymentProcessor processor) : base(processor)
+       
+        public WebPaymentManager(IPaymentProcessor processor) : base(processor)
         {
-            _amount = amount;
+          
         }
 
         public override void ProcessPayment(decimal amount)
@@ -64,16 +64,35 @@ namespace DesignPattern.BridgePattern
 
     public class MobilePaymentManager : PaymentManager
     {
-        private readonly decimal _amount;
-        public MobilePaymentManager(decimal amount,IPaymentProcessor processor) : base(processor)
+     
+        public MobilePaymentManager(IPaymentProcessor processor) : base(processor)
         {
-            _amount = amount;
+           
         }
 
         public override void ProcessPayment(decimal amount)
         {
             Console.WriteLine("پرداخت در اپلیکیشن موبایل:");
             _processor.ProcessPayment(amount);
+        }
+    }
+
+
+    public class ClientPayment
+    {
+        public static void RunPayment()
+        {
+            IPaymentProcessor creditCard = new CreditCardPayment();
+            IPaymentProcessor paypal = new PayPalPayment();
+            IPaymentProcessor bankTransfer = new BankTransferPayment();
+
+            PaymentManager webCreditCard = new WebPaymentManager(creditCard);
+            PaymentManager mobilePaypal = new MobilePaymentManager(paypal);
+
+            webCreditCard.ProcessPayment(1000);
+            mobilePaypal.ProcessPayment(1000);
+
+
         }
     }
 }
