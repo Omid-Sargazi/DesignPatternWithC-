@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPattern", "DesignPattern.csproj", "{62987482-A5DF-4074-9D06-505107D80D48}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9DAA3A8A-4F69-4E4F-9DB8-9B95B223441C} = {9DAA3A8A-4F69-4E4F-9DB8-9B95B223441C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIProject", "..\APIProject\APIProject.csproj", "{9DAA3A8A-4F69-4E4F-9DB8-9B95B223441C}"
 EndProject

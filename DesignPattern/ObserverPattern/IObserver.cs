@@ -59,7 +59,7 @@ namespace DesignPattern.ObserverPattern
             {
                 if (_observers.Count > 0)
                 {
-                    observer.Update(_temp)
+                    observer.Update(_temp);
                 }
             }
         }

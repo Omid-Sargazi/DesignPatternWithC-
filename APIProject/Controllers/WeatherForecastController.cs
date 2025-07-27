@@ -29,5 +29,11 @@ namespace APIProject.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("boom")]
+        public IActionResult Boom()
+        {
+            throw new Exception("this is a test exception");
+        }
     }
 }

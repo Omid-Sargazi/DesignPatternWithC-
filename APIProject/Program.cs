@@ -1,4 +1,5 @@
-using APIProject.RequestTimingMiddleware;
+using APIProject.Middlewares;
+using APIProject.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<RequestTimingMiddleware>();
+app.UseMiddleware<JwtValidationMiddleware>();
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
