@@ -24,21 +24,21 @@ namespace DesignPattern.LeetCodeProblems
 
             return maxVal;
         }
-    
 
-    public int[] TopKLargest_Sort(int[] nums, int k)
+
+        public int[] TopKLargest_Sort(int[] nums, int k)
         {
             return nums.OrderByDescending(x => x).Take(k).ToArray();
         }
-    }
 
-    public int[] TopKLargest_MinHeap(int[] nums, int k)
+
+        public int[] TopKLargest_MinHeap(int[] nums, int k)
         {
-            var minHeap = new PriorityQueue<int,int>();
-            foreach(int num in nums)
+            var minHeap = new PriorityQueue<int, int>();
+            foreach (int num in nums)
             {
                 minHeap.Enqueue(num, num);
-                if(minHeap.Count>k)
+                if (minHeap.Count > k)
                 {
                     minHeap.Dequeue();
                 }
@@ -46,4 +46,7 @@ namespace DesignPattern.LeetCodeProblems
 
             return minHeap.UnorderedItems.Select(x => x.Element).ToArray();
         }
+    }
+
+
 }
