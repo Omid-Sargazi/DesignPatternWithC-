@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{073BD3D9-37F6-4219-9FA7-CA25E0D2025A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetCodeProblems", "..\LeetCodeProblems\LeetCodeProblems.csproj", "{1E6E7082-7F3E-471C-AC4A-C46B9C5D47E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{073BD3D9-37F6-4219-9FA7-CA25E0D2025A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{073BD3D9-37F6-4219-9FA7-CA25E0D2025A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{073BD3D9-37F6-4219-9FA7-CA25E0D2025A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6E7082-7F3E-471C-AC4A-C46B9C5D47E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6E7082-7F3E-471C-AC4A-C46B9C5D47E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6E7082-7F3E-471C-AC4A-C46B9C5D47E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6E7082-7F3E-471C-AC4A-C46B9C5D47E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
