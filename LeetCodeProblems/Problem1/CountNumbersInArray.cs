@@ -20,5 +20,18 @@ namespace LeetCodeProblems.Problem1
 
             return freq;
         }
+
+        public static Dictionary<string, int> RunCountString(string[] words)
+        {
+            var freq = new Dictionary<string, int>();
+            foreach(var word in words)
+            {
+                if(freq.ContainsKey(word))
+                    freq[word]++;
+                freq[word] =1;
+            }
+
+            return freq;
+        }
     }
 }
