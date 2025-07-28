@@ -101,5 +101,61 @@ namespace DesignPattern.AbstarctFactory
         IAbstractProductC CreateProductC();
     }
 
-    
+
+    public class ConcreteFactory1 : IAbstarctFactory
+    {
+        public IAbstractProductA CreateProductA()
+        {
+            return new ConcreateProductA1();
+        }
+
+        public IAbstarctProductB CreateProductB()
+        {
+            return new ConcreateProductB1();
+        }
+
+        public IAbstractProductC CreateProductC()
+        {
+            return new ConcreateProductC1();
+        }
+    }
+
+    public class ConcreteFactory2 : IAbstarctFactory
+    {
+        public IAbstractProductA CreateProductA()
+        {
+            return new ConcreateProductA2();
+        }
+
+        public IAbstarctProductB CreateProductB()
+        {
+            return new ConcreateProductB2();
+        }
+
+        public IAbstractProductC CreateProductC()
+        {
+            return new ConcreateProductC2();
+        }
+    }
+
+    public class ClientFactoryProduct
+    {
+        private readonly IAbstractProductA _productA;
+        private readonly IAbstarctProductB _productB;
+        private readonly IAbstractProductC _productC;
+        public ClientFactoryProduct(IAbstarctFactory factory)
+        {
+            _productA = factory.CreateProductA();
+            _productB = factory.CreateProductB();
+            _productC = factory.CreateProductC();
+        }
+
+        public string Run()
+        {
+            var resultA = _productA.UsefulFunctionA();
+            var resultB = _productB.UsefulFunctionB();
+            var resultC = _productC.UsefulFunctionC();
+            return resultA + resultB + resultC;
+        }
+    }
 }
