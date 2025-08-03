@@ -36,7 +36,7 @@ namespace DesignPattern.ObserverPattern
     {
         public string Name => "Frank";
 
-        public List<NewsCategory> Interests => new() { NewsCategory.Tech};
+        public List<NewsCategory> Interests => new() { NewsCategory.Tech,NewsCategory.Sports};
 
         public void Update(string news, NewsCategory category)
         {
@@ -79,6 +79,31 @@ namespace DesignPattern.ObserverPattern
                     subscribe.Update(news, newCategory);    
                 }
             }
+        }
+    }
+
+    public class ClientObserver
+    {
+        public  static void Run()
+        {
+            var mike = new Mike();
+            mike.Interests.Add(NewsCategory.Economy);
+            mike.Interests.Add(NewsCategory.Sports);
+
+            var frank = new Frank();
+            frank.Interests.Add(NewsCategory.Sports);
+            frank.Interests.Add(NewsCategory.Politics);
+
+            var sara = new Sara();
+            sara.Interests.Add(NewsCategory.Tech);
+            sara.Interests.Add(NewsCategory.Economy);
+
+            var agancy = new NewsAgency();
+            agancy.Subscribe(mike);
+            agancy.Subscribe(frank);
+            agancy.Subscribe(sara);
+
+            agancy.PublishNews("win manchester", NewsCategory.Sports);
         }
     }
 }
