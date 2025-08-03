@@ -30,4 +30,12 @@ namespace DesignPattern.ObserverPattern
             UpdateTime = DateTime.Now;
         }
     }
+
+    public interface IStockObserver
+    {
+        string Name { get; }
+        Dictionary<string,(decimal minChange, NotificationType typr)> Subscriptions { get; }
+        void Update(StockUpdate update, NotificationType notificationType);
+    }
+
 }
