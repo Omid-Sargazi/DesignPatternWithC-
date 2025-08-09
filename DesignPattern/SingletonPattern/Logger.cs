@@ -22,5 +22,21 @@ namespace DesignPattern.SingletonPattern
         }
 
 
+
+
+        public static void Run()
+        {
+            Lazy<int> lazyNum = new(() =>
+            {
+                Console.WriteLine("Calculating...");
+                return 52;
+            });
+
+            Console.WriteLine(lazyNum.IsValueCreated);
+            Console.WriteLine(lazyNum.Value);
+            Console.WriteLine(lazyNum.IsValueCreated);
+        }
+
+
     }
 }
