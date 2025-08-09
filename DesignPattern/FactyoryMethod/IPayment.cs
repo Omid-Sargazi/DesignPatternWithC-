@@ -27,22 +27,39 @@ namespace DesignPattern.FactyoryMethod
         }
     }
 
+    public abstract class PaymentFactory
+    {
+        public abstract IPayment CreatePayment();
+    }
+
+    public class PayPalFactory : PaymentFactory
+    {
+        public PayPalFactory()
+        {
+        }
+
+        public override IPayment CreatePayment()
+        {
+           return new PayPalPayment();
+        }
+    }
+
+    public class StripeFactory : PaymentFactory
+    {
+        public override IPayment CreatePayment()
+        {
+            return new StripePayment();
+        }
+    }
+
     public class FactoryMethod
     {
         public static void Run()
         {
-            string method = "paypal";
-            IPayment payment;
-            if(method == "paypal")
-            {
-                payment = new PayPalPayment();
-            }
-           else
-            {
-                payment = new StripePayment();
-            }
+            PaymentFactory factory = new PayPalFactory();
+            var paymnet = factory.CreatePayment();
 
-            payment.Pay(100);
+            paymnet.Pay(100);
         }
     }
 }
