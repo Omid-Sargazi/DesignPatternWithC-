@@ -87,4 +87,30 @@ namespace DesignPattern.AbstarctFactory
             return new S3Signer();
         }
     }
+
+    public class AzureBlobClient : IStorageClient
+    {
+        public Task UploadAsync(string key, Stream content, string contentType, CancellationToken ct = default) => Task.CompletedTask;
+        public Task<Stream> DownloadAsync(string key, CancellationToken ct = default) => Task.FromResult<Stream>(Stream.Null);
+        public Task DeleteAsync(string key, CancellationToken ct = default) => Task.CompletedTask;
+    }
+
+    public class AzureBlobSigner : IUrlSigner
+    {
+        public Uri GetSignedReadUrl(string key, TimeSpan ttl) => new($"https://azure.fake/{key}?read");
+        public Uri GetSignedWriteUrl(string key, TimeSpan ttl) => new($"https://azure.fake/{key}?write");
+    }
+
+    public class AzureBlobMetadata : IMetadataReader
+    {
+        public Task<IDictionary<string, string>> GetMetadataAsync(string key, CancellationToken ct = default)
+         => Task.FromResult<IDictionary<string, string>>(new Dictionary<string, string> { { "provider", "azure" } });
+    }
+
+    public sealed class AzureSuiteFactory : IStorageSuiteFactory
+    {
+        public IStorageClient CreateClient() => new AzureBlobClient();
+        public IUrlSigner CreateSigner() => new AzureBlobSigner();
+        public IMetadataReader CreateMetadata() => new AzureBlobMetadata();
+    }
 }
