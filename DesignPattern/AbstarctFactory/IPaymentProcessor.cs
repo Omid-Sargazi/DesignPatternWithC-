@@ -81,4 +81,21 @@ namespace DesignPattern.AbstarctFactory
             return new StripeReceipt();
         }
     }
+
+    public sealed class CheckoutService
+    {
+        private readonly IPaymentProcessor _processor;
+        private readonly IReceiptGenerator _receipt;
+        public CheckoutService(IPaymentSuiteFactory factory)
+        {
+            _processor = factory.CreateProcessor();
+            _receipt = factory.CreateReceipt();
+        }
+
+        public async Task<string> CheckoutAsync(decimal amount,string currency)
+        {
+            await _processor.ProcessAsync(amount, currency);
+            return _receipt.Generate(amount, currency);
+        }
+    }
 }
