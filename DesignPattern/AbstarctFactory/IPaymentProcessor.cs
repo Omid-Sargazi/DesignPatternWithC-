@@ -49,4 +49,36 @@ namespace DesignPattern.AbstarctFactory
             return $"[Stripe] Receipt for {amount} {currency}";
         }
     }
+
+    public interface IPaymentSuiteFactory
+    {
+        IPaymentProcessor CreateProcessor();
+        IReceiptGenerator CreateReceipt();
+    }
+
+    public sealed class PayPalSuiteFactory : IPaymentSuiteFactory
+    {
+        public IPaymentProcessor CreateProcessor()
+        {
+            return new PayPalProcessor();
+        }
+
+        public IReceiptGenerator CreateReceipt()
+        {
+            return new PayPalReceipt();
+        }
+    }
+
+    public class StripeSuiteFactory : IPaymentSuiteFactory
+    {
+        public IPaymentProcessor CreateProcessor()
+        {
+            return new StripeProcessor();
+        }
+
+        public IReceiptGenerator CreateReceipt()
+        {
+            return new StripeReceipt();
+        }
+    }
 }
