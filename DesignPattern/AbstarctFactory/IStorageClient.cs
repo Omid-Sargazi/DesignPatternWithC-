@@ -113,4 +113,24 @@ namespace DesignPattern.AbstarctFactory
         public IUrlSigner CreateSigner() => new AzureBlobSigner();
         public IMetadataReader CreateMetadata() => new AzureBlobMetadata();
     }
+
+    public sealed class FileService
+    {
+        private readonly IStorageClient _storageClient;
+        private readonly IUrlSigner _signer;
+        private readonly IMetadataReader _metadataReader;
+        public FileService(IStorageSuiteFactory factory)
+        {
+            _storageClient = factory.CreateClient();
+            _signer = factory.CreateSigner();
+            _metadataReader = factory.CreateMetadata();
+        }
+
+        public Task UploadAsync(string key, Stream content, string contentType, CancellationToken ct = default)
+       => _storageClient.UploadAsync(key, content, contentType, ct);
+
+        public Uri GetReadUrl(string key, TimeSpan ttl) => _signer.GetSignedReadUrl(key, ttl);
+        public Task<IDictionary<string, string>> GetInfoAsync(string key, CancellationToken ct = default)
+            => _metadataReader.GetMetadataAsync(key, ct);
+    }
 }
