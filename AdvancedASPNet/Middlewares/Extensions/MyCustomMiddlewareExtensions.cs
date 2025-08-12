@@ -25,4 +25,12 @@ namespace AdvancedASPNet.Middlewares.Extensions
             return builder.UseMiddleware<RequestTimingMiddleware>();
         }
     }
+
+    public static class MyJwtValidationMiddleware
+    {
+        public static IApplicationBuilder UseJwtValidationMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<JwtValidationMiddleware>();
+        }
+    }
 }

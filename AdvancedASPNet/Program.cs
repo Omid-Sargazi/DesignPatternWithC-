@@ -28,7 +28,9 @@ app.UseMyLoggingMiddleware();
 
 app.UseMiddleware<MyCustomMiddleware>();
 app.UseRequestTimingMiddleware();
-app.Run(async context =>{ await context.Response.WriteAsync("Hello from Run"); });
+app.UseJwtValidationMiddleware();
+
+//app.Run(async context =>{ await context.Response.WriteAsync("Hello from Run"); });
 app.UseMyCustomMiddleware();
 app.UseHttpsRedirection();
 
