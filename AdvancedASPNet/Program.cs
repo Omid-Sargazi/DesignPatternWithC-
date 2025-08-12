@@ -1,4 +1,5 @@
 using AdvancedASPNet.Middlewares;
+using AdvancedASPNet.Middlewares.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseMiddleware<MyCustomMiddleware>();
+//app.UseMiddleware<MyCustomMiddleware>();
+app.UseMyCustomMiddleware();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
