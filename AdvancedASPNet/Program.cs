@@ -17,6 +17,15 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Use 1");
+    await next();
+    Console.WriteLine("Use 1 - End");
+});
+
+app.Run(async context =>{ await context.Response.WriteAsync("Hello from Run"); });
+
 //app.UseMiddleware<MyCustomMiddleware>();
 app.UseMyCustomMiddleware();
 app.UseHttpsRedirection();
