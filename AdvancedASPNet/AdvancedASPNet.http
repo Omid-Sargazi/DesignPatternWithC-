@@ -1,0 +1,6 @@
+@AdvancedASPNet_HostAddress = http://localhost:5278
+
+GET {{AdvancedASPNet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
