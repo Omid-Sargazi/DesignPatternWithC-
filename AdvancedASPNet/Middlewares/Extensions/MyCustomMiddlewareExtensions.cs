@@ -7,4 +7,12 @@
             return builder.UseMiddleware<MyCustomMiddleware>(); 
         }
     }
+
+    public static class MyLoggingMiddleware
+    {
+        public static IApplicationBuilder UseMyLoggingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<LoggingMiddleware>();
+        }
+    }
 }

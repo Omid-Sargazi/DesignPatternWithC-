@@ -24,9 +24,10 @@ app.Use(async (context, next) =>
     Console.WriteLine("Use 1 - End");
 });
 
-app.Run(async context =>{ await context.Response.WriteAsync("Hello from Run"); });
+app.UseMyLoggingMiddleware();
 
-//app.UseMiddleware<MyCustomMiddleware>();
+app.Run(async context =>{ await context.Response.WriteAsync("Hello from Run"); });
+app.UseMiddleware<MyCustomMiddleware>();
 app.UseMyCustomMiddleware();
 app.UseHttpsRedirection();
 
