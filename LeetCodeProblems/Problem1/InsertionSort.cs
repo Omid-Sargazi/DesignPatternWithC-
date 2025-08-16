@@ -22,6 +22,11 @@ namespace LeetCodeProblems.Problem1
                 }
                 arr[j + 1] = key;
             }
+
+            foreach(var item in arr)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
