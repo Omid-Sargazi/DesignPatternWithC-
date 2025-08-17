@@ -73,4 +73,36 @@ namespace DesignPatternsWithC_.StructuralPatterns.Composition
             return totalSize;
         }
     }
+
+    public class CreateComposite
+    {
+        public static void Run()
+        {
+            var file1 = new File("doc.txt", 100);
+            var file2 = new File("doc.jpg", 4500);
+            var file3 = new File("doc.csv", 4500);
+            var file4 = new File("doc.doc", 200);
+            var file5 = new File("doc.txt", 300);
+
+            var folder1 = new Folder("Documents");
+            folder1.Add(file1);
+            folder1.Add(file2);
+            folder1.Add(file3);
+
+            var folder2 = new Folder("Images");
+            folder2.Add(file2);
+
+            var rootFolder = new Folder("Root");
+            rootFolder.Add(folder1);
+            rootFolder.Add(folder2);
+            rootFolder.Add(file4);
+
+            Console.WriteLine("File System Structure:");
+            rootFolder.Display(1);
+
+           
+            Console.WriteLine($"\nTotal size: {rootFolder.GetSize()} KB");
+
+        }
+    }
 }
