@@ -25,5 +25,8 @@ NumberChecker isEvent = DelegateExample3.IsEvent;
 
 DelegateExample3.CheckNumbers(nums, isEvent);
 
+Action<string> greetDelegate = DelegateExample4.ShowMessage;
+greetDelegate("Hi From Action Delegate");
+
 
 //===========================================
