@@ -29,4 +29,7 @@ Action<string> greetDelegate = DelegateExample4.ShowMessage;
 greetDelegate("Hi From Action Delegate");
 
 
+Func<int, int, int> add = DelegateExample5.Add;
+int result = add(4, 5);
+Console.WriteLine(result);
 //===========================================
