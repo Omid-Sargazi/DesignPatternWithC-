@@ -44,4 +44,44 @@ namespace DesignPatternsWithC_.SortingProblems
             }
         }
     }
+
+    public class SelectionSort
+    {
+        public static void Run(int[] arr)
+        {
+            for(int i=0;i<=arr.Length-1;i++)
+            {
+                int minIndex = i;
+                for(int j=i+1;j<=arr.Length-1;j++)
+                {
+                    if (arr[j] < arr[minIndex])
+                        minIndex = j;
+                }
+                (arr[i], arr[minIndex]) = (arr[minIndex],arr[i]);
+            }
+
+
+            Console.WriteLine(string.Join(",",arr));
+        }
+    }
+
+
+    public class BubbleSortInCSharp
+    {
+        public static void Run(int[] arr)
+        {
+            for (int start = arr.Length - 1; start >= 01; start--)
+            {
+                for (int j = 0; j <= start-1; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
+                    }
+                }
+            }
+
+            Console.WriteLine(string.Join (",",arr));
+        }
+    }
 }
