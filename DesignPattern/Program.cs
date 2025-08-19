@@ -10,4 +10,5 @@ Console.WriteLine("Hello, World!");
 //ClientObserver.Run();
 int[] arr = new int[]{70,-40,10,1,1,2,3,0,70,-90,12};
 //BubbleSorting.Run(arr);
-InsertionSort.Run(arr);
+//InsertionSort.Run(arr);
+Selection.Run(arr);
