@@ -32,4 +32,11 @@ greetDelegate("Hi From Action Delegate");
 Func<int, int, int> add = DelegateExample5.Add;
 int result = add(4, 5);
 Console.WriteLine(result);
+
+
+
+static void ShowMessage(string text)=>Console.WriteLine(text);
+Button button = new Button();
+button.OnClick += ShowMessage;
+button.Click("Hii Saeed");
 //===========================================
