@@ -47,5 +47,7 @@ Func<int, int> doubleThenSquare = x => squareOp(doubleOp(x));
 int resultt = doubleThenSquare(3);
 Console.WriteLine(resultt);
 
+RunCal.Run(5,5,"Add");
+
 
 //===========================================
