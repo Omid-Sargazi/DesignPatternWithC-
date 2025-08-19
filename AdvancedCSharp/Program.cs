@@ -39,4 +39,13 @@ static void ShowMessage(string text)=>Console.WriteLine(text);
 Button button = new Button();
 button.OnClick += ShowMessage;
 button.Click("Hii Saeed");
+
+Func<int, int> doubleOp = DelegateExample6.Double;
+Func<int, int> squareOp = DelegateExample6.Square;
+
+Func<int, int> doubleThenSquare = x => squareOp(doubleOp(x));
+int resultt = doubleThenSquare(3);
+Console.WriteLine(resultt);
+
+
 //===========================================
