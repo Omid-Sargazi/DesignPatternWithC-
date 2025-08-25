@@ -56,7 +56,8 @@ int[] arr = new[] { 70, -70, 10, -10, 40, 1, 2, 3, 4, 4, 3, 2, 1, 0, 0, 0 };
 //InsertionSort.Run(arr);
 
 int[] arr2 = new[] { 1, 2, 3,4,5 };
-Console.WriteLine(SumDivideConquer.Run(arr2, 0, 4));
+//Console.WriteLine(SumDivideConquer.Run(arr2, 0, 4));
+Console.WriteLine(SumDivideConquer.PowerDivideConquer(3,3));
 
 
 //===========================================
