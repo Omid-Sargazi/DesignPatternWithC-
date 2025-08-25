@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using AdvancedCSharp.Delegate;
 using System.Linq;
+using AdvancedCSharp.DataStructure;
 
 Console.WriteLine("Hello, World!");
 //DelegateExample1.Run();
@@ -48,6 +49,10 @@ int resultt = doubleThenSquare(3);
 Console.WriteLine(resultt);
 
 RunCal.Run(5,5,"Add");
+
+int[] arr = new[] { 70, -70, 10, -10, 40, 1, 2, 3, 4, 4, 3, 2, 1, 0, 0, 0 };
+//BubbleSorting.Run(arr);
+SelectionSort.Run(arr);
 
 
 //===========================================
