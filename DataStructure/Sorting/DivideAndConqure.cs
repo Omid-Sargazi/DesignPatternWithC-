@@ -19,5 +19,17 @@ namespace DataStructure.Sorting
 
             return Math.Max(maxleft, maxRight);
         }
+
+        public static int SumArray(int[] arr, int start, int end)
+        {
+            if(start == end) return arr[start];
+
+            int mid = start+ ( end - start) / 2;
+
+            int leftSum = SumArray(arr, start, mid);
+            int rightSum = SumArray(arr, mid + 1, end);
+
+            return leftSum + rightSum;
+        }
     }
 }
