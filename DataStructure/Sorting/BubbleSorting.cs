@@ -22,7 +22,7 @@ namespace DataStructure.Sorting
                     }
                 }
 
-                if(!swapped) break;
+                if (!swapped) break;
             }
 
             Console.WriteLine(string.Join(",",arr));
