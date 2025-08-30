@@ -133,6 +133,25 @@ namespace Algorithems.Sortings
 
                 Console.WriteLine(string.Join(",",result)+" Merge Sorting;");
             }
+
+
+            public static int PivotDemo(int[] arr, int lo, int hi)
+            {
+                int pivot = arr[hi];
+                int i = lo - 1;
+                for (int j = lo; j < hi; j++)
+                {
+                    if (arr[j] < pivot)
+                    {
+
+                        i++;
+                        (arr[i], arr[j]) = (arr[j], arr[i]);
+                    }
+                }
+
+                (arr[i + 1], arr[hi]) = (arr[hi], arr[i + 1]);
+                return i + 1;
+            }
         }
     }
 }
