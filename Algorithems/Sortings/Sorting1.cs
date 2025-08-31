@@ -150,6 +150,7 @@ namespace Algorithems.Sortings
                 }
 
                 (arr[i + 1], arr[hi]) = (arr[hi], arr[i + 1]);
+                Console.WriteLine(string.Join(",",arr)+$" Pivot : {pivot}");
                 return i + 1;
             }
         }
