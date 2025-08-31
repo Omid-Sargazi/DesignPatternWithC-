@@ -37,4 +37,18 @@ namespace Algorithems.DesignPatterns.ReportingSystem
             Console.WriteLine($"کد HTML: <html><body>{data}</body></html>");
         }
     }
+
+    public abstract class Report
+    {
+        protected readonly IExportFormat _exportFormat;
+
+        public Report(IExportFormat exportFormat)
+        {
+            _exportFormat = exportFormat;
+        }
+
+        public abstract void Generate();
+    }
+
+
 }
