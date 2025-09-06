@@ -13,7 +13,8 @@ namespace Algorithems.Sortings
             Console.WriteLine($"Befor Heap: {string.Join(",",arr)}");
             //Heapify(arr,0,arr.Length);
             MaxHeap(arr);
-            MaxHeap(arr);
+            //MaxHeap(arr);
+            SortHeap(arr);
             Console.WriteLine($"After Heap: {string.Join(",", arr)}");
 
         }
