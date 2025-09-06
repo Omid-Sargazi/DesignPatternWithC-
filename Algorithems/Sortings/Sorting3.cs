@@ -11,9 +11,30 @@ namespace Algorithems.Sortings
         public static void Run(int[] arr)
         {
             Console.WriteLine($"Befor Heap: {string.Join(",",arr)}");
-            Heapify(arr,0,arr.Length);
+            //Heapify(arr,0,arr.Length);
+            MaxHeap(arr);
+            MaxHeap(arr);
             Console.WriteLine($"After Heap: {string.Join(",", arr)}");
 
+        }
+
+        private static void MaxHeap(int[] arr)
+        {
+            int n = arr.Length;
+            for (int i = n / 2 - 1; i >= 0; i--)
+            {
+                Heapify(arr,i,n);
+            }
+        }
+
+        private static void SortHeap(int[] arr)
+        {
+            int n = arr.Length;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                (arr[0], arr[i]) = (arr[i], arr[0]);
+                Heapify(arr,0,i);
+            }
         }
 
         private static void Heapify(int[] arr, int i,int n)
