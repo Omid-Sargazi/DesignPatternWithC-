@@ -13,4 +13,5 @@ int[] arr2 = new int[] { 1, 2, 3 };
 //Sorting2.Bubble(arr);
 
 //Sorting3.Run(arr);
-Sorting3.BubbleSort(arr);
+//Sorting3.BubbleSort(arr);
+Sorting3.SelectionSort(arr);
