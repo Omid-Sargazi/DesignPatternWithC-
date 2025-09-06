@@ -12,4 +12,5 @@ int[] arr2 = new int[] { 1, 2, 3 };
 //Sorting1.Sorting.PivotDemo(arr,0,arr.Length-1);
 //Sorting2.Bubble(arr);
 
-Sorting3.Run(arr);
+//Sorting3.Run(arr);
+Sorting3.BubbleSort(arr);
