@@ -115,5 +115,38 @@ namespace Algorithems.Sortings
             Console.WriteLine($"Insertion Sorting: {string.Join(",", arr)}");
 
         }
+
+        public static void QuickSort(int[] arr, int lo, int hi)
+        {
+            if (lo <= hi)
+            {
+                int pi = Partition(arr, lo, hi);
+                QuickSort(arr, lo, pi - 1);
+                QuickSort(arr, pi + 1, hi);
+            }
+        }
+
+        private static int Partition(int[] arr, int lo, int hi)
+        {
+            int pivot = arr[hi];
+            int i = lo - 1;
+            for (int j = lo; j < hi; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    (arr[j], arr[i]) = (arr[i], arr[j]);
+                }
+            }
+            (arr[i + 1], arr[hi]) = (arr[hi], arr[i+1]);
+            return i+1;
+        }
+
+        public static void RunQuickSort(int[] arr)
+        {
+            Console.WriteLine($"Before QuickSort: {string.Join(",", arr)}");
+            QuickSort(arr,0,arr.Length-1);
+            Console.WriteLine($"After QuickSort: {string.Join(",", arr)}");
+        }
     }
 }
