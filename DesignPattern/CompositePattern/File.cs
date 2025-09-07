@@ -141,4 +141,22 @@ namespace DesignPattern.CompositePattern
             return ".excel";
         }
     }
+
+    public abstract class Report
+    {
+        protected IReportFormat _format;
+
+        protected Report(IReportFormat format)
+        {
+            _format = format;
+        }
+
+
+        public void SetFromat(IReportFormat format)
+        {
+            _format = format;
+        }
+
+        public abstract void Generate();
+    }
 }
