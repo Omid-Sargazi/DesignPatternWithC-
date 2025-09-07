@@ -159,4 +159,20 @@ namespace DesignPattern.CompositePattern
 
         public abstract void Generate();
     }
+
+
+    public class ManagerReport : Report
+    {
+        private string _specificData;
+        public ManagerReport(IReportFormat format, string specificData) : base(format)
+        {
+            _specificData = specificData;
+        }
+
+        public override void Generate()
+        {
+            string content = $"Manager Report: Performance metrics, {_specificData}";
+            _format.Generate(content);
+        }
+    }
 }
