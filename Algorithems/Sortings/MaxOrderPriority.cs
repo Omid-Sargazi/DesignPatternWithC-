@@ -17,7 +17,7 @@ namespace Algorithems.Sortings
         public MaxOrderPriority(IEnumerable<int> items)
         {
             heap = new List<int>(items);
-            //BuildHeap();
+            BuildHeap();
         }
 
         public int Count => heap.Count;
