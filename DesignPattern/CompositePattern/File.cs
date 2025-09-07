@@ -35,4 +35,41 @@ namespace DesignPattern.CompositePattern
             Console.WriteLine($"{indent}📄 {Name} ({Size} bytes)");
         }
     }
+
+
+    public class Directory : IFileSystemComponent
+    {
+
+        private readonly List<IFileSystemComponent> _children = new List<IFileSystemComponent>();
+
+        public void AddComponent(IFileSystemComponent component)
+        {
+            _children.Add(component);
+        }
+
+        public void RemoveComponent(IFileSystemComponent component)
+        {
+            _children.Remove(component);
+        }
+        public string Name { get; }
+        public long GetSize()
+        {
+            long totalSize = 0;
+            foreach (var component in _children)
+            {
+                totalSize += component.GetSize();
+            }
+            return totalSize;
+        }
+
+        public void Display(string indent = "")
+        {
+            Console.WriteLine($"{indent}📁 {Name}/");
+
+            foreach (var component in _children)
+            {
+                component.Display(indent + "  ");
+            }
+        }
+    }
 }
