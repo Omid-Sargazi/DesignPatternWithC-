@@ -95,4 +95,50 @@ namespace DesignPattern.CompositePattern
             return _adaptee.GetOldRequest() + $"Add New Request with Adapter pattern.";
         }
     }
+
+
+    public interface IReportFormat
+    {
+        void Generate(string context);
+        string GetFileExtension();
+    }
+
+    public class PdfFormat : IReportFormat
+    {
+        public void Generate(string context)
+        {
+            Console.WriteLine($"generating PDF report: {context}");
+        }
+
+        public string GetFileExtension()
+        {
+            return ".pdf";
+        }
+    }
+
+    public class WordFormat : IReportFormat
+    {
+        public void Generate(string context)
+        {
+           Console.WriteLine($"generating Word report: {context}");
+        }
+
+        public string GetFileExtension()
+        {
+            return ".word";
+        }
+    }
+
+    public class ExcelFormat : IReportFormat
+    {
+        public void Generate(string context)
+        {
+            Console.WriteLine($"Generation Excel format: {context}");
+        }
+
+        public string GetFileExtension()
+        {
+            return ".excel";
+        }
+    }
 }
