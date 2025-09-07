@@ -72,4 +72,27 @@ namespace DesignPattern.CompositePattern
             }
         }
     }
+
+
+    public interface ITarget
+    {
+        string GetNewRequest();
+    }
+
+    public class Adaptee
+    {
+        public string GetOldRequest()
+        {
+            return $"Old Request;";
+        }
+    }
+
+    public class Adapter : ITarget
+    {
+        private Adaptee _adaptee;
+        public string GetNewRequest()
+        {
+            return _adaptee.GetOldRequest() + $"Add New Request with Adapter pattern.";
+        }
+    }
 }
