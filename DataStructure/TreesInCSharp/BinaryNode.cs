@@ -46,5 +46,13 @@ namespace DataStructure.TreesInCSharp
             Console.WriteLine(root.Value+" ");
             Inorder(root.right);
         }
+
+        private static void Postorder(BinaryNode root)
+        {
+            if(root == null) return;
+            Postorder(root.left);
+            Postorder(root.right);
+            Console.WriteLine(root.Value+" ");
+        }
     }
 }
