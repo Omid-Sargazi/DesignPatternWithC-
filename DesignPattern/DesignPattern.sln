@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructure", "..\DataStr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithems", "..\Algorithems\Algorithems.csproj", "{C2334899-04E5-4A4E-BB5C-BDCDA6C3241B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQExamples", "..\LINQExamples\LINQExamples.csproj", "{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{C2334899-04E5-4A4E-BB5C-BDCDA6C3241B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2334899-04E5-4A4E-BB5C-BDCDA6C3241B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2334899-04E5-4A4E-BB5C-BDCDA6C3241B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
