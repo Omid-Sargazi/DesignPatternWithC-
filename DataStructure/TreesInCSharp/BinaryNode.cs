@@ -54,5 +54,20 @@ namespace DataStructure.TreesInCSharp
             Postorder(root.right);
             Console.WriteLine(root.Value+" ");
         }
+
+        public static void LevelOrder(BinaryNode root)
+        {
+            if(root==null) return;
+
+            var q = new Queue<BinaryNode>();
+            q.Enqueue(root);
+            while (q.Count>0)
+            {
+                var cur = q.Dequeue();
+                Console.WriteLine(cur.Value);
+                if(cur.left !=null) q.Enqueue(cur.left);
+                if(cur.right !=null) q.Enqueue(cur.right);
+            }
+        }
     }
 }
