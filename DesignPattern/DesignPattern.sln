@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithems", "..\Algorithe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQExamples", "..\LINQExamples\LINQExamples.csproj", "{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPatternsInCSharp", "..\DesignPatternsInCSharp\DesignPatternsInCSharp.csproj", "{B2F48FF1-752E-46C0-982B-C55882BB09DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B33CBAF-C1F8-432A-99F1-5375AFB91E1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F48FF1-752E-46C0-982B-C55882BB09DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F48FF1-752E-46C0-982B-C55882BB09DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F48FF1-752E-46C0-982B-C55882BB09DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F48FF1-752E-46C0-982B-C55882BB09DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
