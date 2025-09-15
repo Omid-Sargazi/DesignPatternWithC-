@@ -67,5 +67,31 @@ namespace DesignPatternsInCSharp.Bridge
         public abstract string GetPaymentType();
     }
 
-    
+    public class CreditCardPayment : Payment
+    {
+        private string _cardNumber;
+        private string _expiryDate;
+        public CreditCardPayment(IPaymentGateway gateway,string cardNumber, string expiryDate) : base(gateway)
+        {
+            _cardNumber = cardNumber;
+            _expiryDate = expiryDate;
+        }
+
+        public override bool ExecutePayment(decimal amount, string currency)
+        {
+            Console.WriteLine($"Processing credit card payment: {_cardNumber}");
+            return _gateway.ProcessPayment(amount,currency);
+        }
+
+        public override bool CancelPayment(string transactionId)
+        {
+            Console.WriteLine($"Canceling credit card payment: {transactionId}");
+            return _gateway.RefundPayment(0, transactionId);
+        }
+
+        public override string GetPaymentType()
+        {
+           return "Credit Card";
+        }
+    }
 }
