@@ -45,10 +45,14 @@ namespace DesignPatternsInCSharp.Bridge
     public abstract class BaseRender
     {
         protected readonly IRenderer _renderer;
+        public string Color { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
 
         public BaseRender(IRenderer render)
         {
             _renderer = render;
+            Color = "BLack";
         }
 
         public abstract void Draw();
