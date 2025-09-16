@@ -52,4 +52,18 @@ namespace AdvancedCSharp.DesignPattern.Structural
             return "Stripe";
         }
     }
+
+    public abstract class Payment
+    {
+        protected readonly IPaymentGateway _paymentGateway;
+
+        public Payment(IPaymentGateway paymentGateway)
+        {
+            _paymentGateway = paymentGateway;
+        }
+
+        public abstract bool ExecutePayment(decimal amount, string currency);
+        public abstract bool CancelPayment(string transactionId);
+        public abstract string GetPaymentType();
+    }
 }
