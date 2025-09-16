@@ -66,4 +66,59 @@ namespace AdvancedCSharp.DesignPattern.Structural
         public abstract bool CancelPayment(string transactionId);
         public abstract string GetPaymentType();
     }
+
+    public class CreditCardPayment : Payment
+    {
+        private string _cartNumber;
+        private string _expiryDate;
+        public CreditCardPayment(IPaymentGateway paymentGateway, string cartNumber, string expiryDate) : base(paymentGateway)
+        {
+            _cartNumber = cartNumber;
+            _expiryDate = expiryDate;
+        }
+
+        public override bool ExecutePayment(decimal amount, string currency)
+        {
+            Console.WriteLine($"Processing credit card payment: {_cartNumber}");
+            return _paymentGateway.ProcessPayment(amount, currency);
+
+        }
+
+        public override bool CancelPayment(string transactionId)
+        {
+            Console.WriteLine($"Canceling credit card payment: {transactionId}");
+            return _paymentGateway.RefundPayment(0, transactionId);
+        }
+
+        public override string GetPaymentType()
+        {
+            return "Credit Card";
+        }
+    }
+
+    public class CryptoPayment : Payment
+    {
+        private string _walletAddress;
+        public CryptoPayment(IPaymentGateway paymentGateway, string walletAddress) : base(paymentGateway)
+        {
+            _walletAddress = walletAddress;
+        }
+
+        public override bool ExecutePayment(decimal amount, string currency)
+        {
+            Console.WriteLine($"Processing crypto payment from: {_walletAddress}");
+            return _paymentGateway.ProcessPayment(amount, currency);
+        }
+
+        public override bool CancelPayment(string transactionId)
+        {
+            Console.WriteLine($"Canceling crypto payment: {transactionId}");
+            return _paymentGateway.RefundPayment(0, transactionId);
+        }
+
+        public override string GetPaymentType()
+        {
+            return "Cryptocurrency";
+        }
+    }
 }
