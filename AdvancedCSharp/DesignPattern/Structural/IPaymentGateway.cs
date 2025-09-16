@@ -121,4 +121,16 @@ namespace AdvancedCSharp.DesignPattern.Structural
             return "Cryptocurrency";
         }
     }
+
+    public class Clientpayment
+    {
+        public static void Run()
+        {
+            IPaymentGateway paypal = new PayPalGateway();
+            IPaymentGateway strip = new StripeGateway();
+
+            Payment crediteCardPayent = new CreditCardPayment(paypal, "1234-5678-9012-3456", "12/2");
+            crediteCardPayent.ExecutePayment(100, "USD");
+        }
+    }
 }
