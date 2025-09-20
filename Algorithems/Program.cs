@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Algorithems.Sortings;
+using Algorithems.Trees;
 
 Console.WriteLine("Hello, World!");
 int[] arr = new int[] {-7,7,-8,-9,8,9,4,1,10,12,41,10,45,-9,-8};
@@ -21,4 +22,6 @@ int[] arr2 = new int[] { 1, 2, 3 };
 //SortingInCSharp.SelectionSort(arr);
 //SortingInCSharp.InsertionSort(arr);
 //SortingInCSharp.RunQuickSort(arr);
-SortingInCSharp.MergeSort(arr);
+//SortingInCSharp.MergeSort(arr);
+
+ClientTrre.Run();
