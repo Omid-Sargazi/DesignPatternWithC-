@@ -82,6 +82,17 @@ namespace Algorithems.Trees
         {
             return node.Left == null ? node.Data : FindMinRec(node.Left);
         }
+
+        public int FindMax()
+        {
+            if (root == null) throw new InvalidOperationException("This is empty");
+            return FindMaxRec(root);
+        }
+
+        private int FindMaxRec(BSTNode node)
+        {
+            return node.Right == null ? node.Data : FindMaxRec(node.Right);
+        }
     }
 
     public class ClientTrre
