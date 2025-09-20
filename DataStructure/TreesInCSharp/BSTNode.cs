@@ -36,5 +36,21 @@ namespace DataStructure.TreesInCSharp
             else if (data > node.Data) node.Right = InsertRec(node.Right, data);
             return node;
         }
+
+        public bool Search(int data)
+        {
+            return SearchRec(root, data);
+        }
+
+        public bool SearchRec(BSTNode node, int data)
+        {
+            if(node==null) return false;
+
+            if(data==node.Data) return true;
+
+            return data < node.Data ? 
+                SearchRec(node.Left, data) : 
+                SearchRec(node.Right, data);
+        }
     }
 }
