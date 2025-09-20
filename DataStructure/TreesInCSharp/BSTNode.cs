@@ -52,5 +52,16 @@ namespace DataStructure.TreesInCSharp
                 SearchRec(node.Left, data) : 
                 SearchRec(node.Right, data);
         }
+
+        public int FindMin()
+        {
+            if (root == null) throw new InvalidOperationException("Three is empty");
+            return FindMinRec(root);
+        }
+
+        private int FindMinRec(BSTNode node)
+        {
+            return node.Left == null ? node.Data : FindMinRec(node.Left);
+        }
     }
 }
