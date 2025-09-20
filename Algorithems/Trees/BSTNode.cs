@@ -71,6 +71,17 @@ namespace Algorithems.Trees
                 InOrderRec(node.Right);
             }
         }
+
+        public int FindMin()
+        {
+            if (root == null) throw new InvalidOperationException("This is Empty");
+            return FindMinRec(root);
+        }
+
+        private int FindMinRec(BSTNode node)
+        {
+            return node.Left == null ? node.Data : FindMinRec(node.Left);
+        }
     }
 
     public class ClientTrre
