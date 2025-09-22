@@ -4,6 +4,7 @@ using DataStructure.Linked_List;
 using DataStructure.Patterns;
 using DataStructure.Sorting;
 using DataStructure.TreesInCSharp;
+using DataStructure.TwoPointer;
 
 Console.WriteLine("Hello, World!");
 int[] arr = new[] { 70, -70, 4, 1, 2, 3, 41, -70, -80, -99, -1000};
@@ -16,4 +17,9 @@ int[] arr2 = { 2, 4, 6, 8 };
 //Console.WriteLine(DivideAndConqure.SumArray(arr, 2, arr.Length-1)+"SumArray");
 
 //RunTree.Run();
-ClientLinkedList.Run();
+//ClientLinkedList.Run();
+var res = TwoSunProblem.TwoSum(arr2,8);
+foreach (var item in res)
+{
+    Console.WriteLine(item);
+}
