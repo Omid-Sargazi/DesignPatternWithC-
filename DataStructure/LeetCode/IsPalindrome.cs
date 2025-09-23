@@ -27,9 +27,10 @@ namespace DataStructure.LeetCode
                 {
                     if (char.ToLower(s[left]) != char.ToLower(s[right]))
                     {
-                        left++;
-                        right--;
+                        return false;
                     }
+                    left++;
+                    right--;
                 }
             }
 
