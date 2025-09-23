@@ -8,7 +8,7 @@ namespace ProblemsOfLeetCodes.Problem1
 {
     public class Solution1
     {
-        public int[] TwoSum(int[] nums, int target)
+        public static int[] TwoSum(int[] nums, int target)
         {
             int left = 0;
             int right = nums.Length - 1;
@@ -31,5 +31,25 @@ namespace ProblemsOfLeetCodes.Problem1
 
             return new[] {-1,-1 };
         }
+
+        public static int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+
+            int uniquePointer = 1;
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] != nums[i - 1])
+                {
+                    nums[uniquePointer] = nums[i];
+                    uniquePointer++;
+                }
+            }
+
+            return uniquePointer;
+        }
+
+
     }
 }
