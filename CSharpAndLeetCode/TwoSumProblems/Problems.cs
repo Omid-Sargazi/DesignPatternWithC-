@@ -48,5 +48,21 @@ namespace CSharpAndLeetCode.TwoSumProblems
             return maxProfit;
         }
 
+        public static bool ContainsDuplicate(int[] nums)
+        {
+           Dictionary<int,int> seen = new Dictionary<int,int>();
+
+           for (int i = 0; i < nums.Length; i++)
+           {
+               if (seen.TryGetValue(nums[i], out int val))
+               {
+                   return true;
+               }
+
+               seen[nums[i]] = i;
+           }
+           return false;
+        }
+
     }
 }
