@@ -23,5 +23,30 @@ namespace CSharpAndLeetCode.TwoSumProblems
 
             return new[] { 0 };
         }
+
+        public static int BestTimeBuySellStock(int[] arr)
+        {
+            int minPrice = arr[0];
+            int maxProfit = 0;
+
+            for (int i = 1; i < arr.Length; i++)
+            {
+                int profit = 0;
+                if (arr[i]<minPrice)
+                    minPrice = arr[i];
+                else
+                {
+                    profit = arr[i] - minPrice;
+                }
+
+                if (maxProfit < profit)
+                {
+                    maxProfit = profit;
+                }
+            }
+
+            return maxProfit;
+        }
+
     }
 }
