@@ -64,5 +64,19 @@ namespace CSharpAndLeetCode.TwoSumProblems
            return false;
         }
 
+        public static bool ContainsDuplicate2(int[] nums)
+        {
+            HashSet<int> seen = new HashSet<int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (seen.Add(nums[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
