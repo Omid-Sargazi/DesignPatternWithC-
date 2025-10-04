@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,6 +69,33 @@ namespace CSharpAndLeetCode.Lists
             }
             Console.WriteLine("null");
 
+        }
+
+        public bool Remove(int data)
+        {
+            if (headNode == null)
+            {
+                return false;
+            }
+
+            if (headNode.Data == data)
+            {
+                headNode = headNode.Next;
+                return true;
+            }
+
+
+            var current = headNode;
+            while (current.Next != null)
+            {
+                if (current.Next.Data == data)
+                {
+                    current.Next = current.Next.Next;
+                    return true;
+                }
+                current = current.Next;
+            }
+            return false;
         }
     }
 }
