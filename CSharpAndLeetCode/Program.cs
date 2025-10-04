@@ -10,3 +10,5 @@ Console.WriteLine(Problems.ContainsDuplicate(nums2));
 Console.WriteLine(Problems.ContainsDuplicate2(nums2));
 //Console.WriteLine($"{string.Join(",", Problems.TwoSum(nums, 9))}");
 
+
+

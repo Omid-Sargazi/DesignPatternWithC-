@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,6 +77,11 @@ namespace CSharpAndLeetCode.TwoSumProblems
                 }
             }
             return true;
+        }
+
+        public static int[] ProductOfArrayExceptSelf(int[] nums)
+        {
+            return new[] { 0 };
         }
 
     }
