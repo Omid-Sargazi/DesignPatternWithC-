@@ -48,6 +48,29 @@ namespace CSharpAndAlgorithem.Lists
             current.next = node;
         }
 
+        public bool Remove(int data)
+        {
+            if (head == null) return false;
+
+            if (head.Data == data)
+            {
+                head = head.next;
+                return true;
+            }
+
+            var current = head;
+            while (current.next != null)
+            {
+                if (current.next.Data == data)
+                {
+                    current.next = current.next.next;
+                    return true;
+                }
+                current = current.next;
+            }
+            return false;
+        }
+
         public void Print()
         {
             if (head == null)
