@@ -18,24 +18,63 @@ namespace CSharpAndAlgorithem.Lists
             next = null;
         }
     }
-    public class LinkedList
+    public class LinkedListt
     {
+        private Node head;
+        public LinkedListt(Node node)
+        {
+            head = node;
+        }
 
+        public LinkedListt()
+        {
+
+        }
+
+        public  void Add(Node node)
+        {
+            
+            if (head == null)
+            {
+                head = node;
+                return;
+            }
+            var current = head;
+            while (current.next !=null)
+            {
+                current = current.next;
+            }
+
+            current.next = node;
+        }
+
+        public void Print()
+        {
+            if (head == null)
+            {
+                Console.WriteLine("List Is Empty");
+                return;
+            }
+
+            var current = head;
+            while (current != null)
+            {
+                Console.Write(current.Data+"->");
+                current = current.next;
+            }
+            Console.WriteLine("null");
+        }
     }
 
     public class CLientLinkedList
     {
         public static void Run()
         {
-            Node n1 = new Node(1);
-            Node n2 = new Node(2);
-            Node n3 = new Node(3);
-            Node n4 = new Node(4);
+            LinkedListt l1 = new LinkedListt();
+            l1.Add(new Node(1));
 
-            n1.next = n2;
-            n2.next = n3;
-            n3.next = n4;
-            Console.WriteLine(n1.Data+" "+ n1.next.Data);
+            l1.Add(new Node(2));
+            l1.Print();
         }
     }
 }
