@@ -97,5 +97,28 @@ namespace CSharpAndLeetCode.Lists
             }
             return false;
         }
+
+        public void Reverse()
+        {
+            
+            if (headNode == null)
+            {
+                return;
+            }
+            var current = headNode;
+            Node prev = null;
+            Node next = null;
+            while (current !=null)
+            {
+
+                next = current.Next;//save next
+                current.Next = prev;//change direction
+                prev = current;//next [rev
+                current = next;//next current
+            }
+
+            headNode = prev;
+
+        }
     }
 }
