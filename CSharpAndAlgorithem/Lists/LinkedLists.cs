@@ -70,6 +70,40 @@ namespace CSharpAndAlgorithem.Lists
             _head = prev;
         }
 
+        public void AddFirst(int value)
+        {
+            CustomeNode newNode = new CustomeNode(value);
+            if (_head == null)
+            {
+                _head = newNode;
+                return;
+            }
+
+            
+            newNode.Next = _head.Next;
+            _head = newNode;
+
+        }
+
+        public void AddLastList(int value)
+        {
+            CustomeNode newNode = new CustomeNode(value);
+            if (_head == null)
+            {
+                _head = newNode;
+                return;
+            }
+
+            var current = _head;
+            while (current.Next !=null)
+            {
+                
+                    current = current.Next;
+                    
+            }
+            current.Next = newNode;
+        }
+
         public void Print()
         {
             if (_head == null)
@@ -94,6 +128,8 @@ namespace CSharpAndAlgorithem.Lists
             l1.Add(1);
             l1.Add(10);
             l1.Add(11);
+            l1.AddFirst(0);
+            l1.AddLastList(1000);
             l1.Add(12);
             l1.Print();
             l1.Reverse();
