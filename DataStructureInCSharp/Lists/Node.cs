@@ -67,7 +67,27 @@ namespace DataStructureInCSharp.Lists
             }
         }
 
+        public void Reverse()
+        {
+            if (_head == null)
+            {
+                Console.WriteLine("List is empty");
+                return;
+            }
 
+            var current = _head;
+            Node prev = null;
+            Node next = null;
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+
+            _head = prev;
+        }
     }
 
     public class ClientLinkedList
@@ -80,6 +100,9 @@ namespace DataStructureInCSharp.Lists
             l1.Add(10);
             l1.Add(21);
             l1.Add(13);
+            l1.Print();
+            l1.Reverse();
+            Console.WriteLine(" ");
             l1.Print();
         }
     }
