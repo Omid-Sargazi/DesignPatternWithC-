@@ -3,4 +3,5 @@
 using CSharpAndAlgorithem.Lists;
 
 Console.WriteLine("Hello, World!");
-CLientLinkedList.Run();
+int[] arr = new[] { 1, 7, -9, 74, -10, 77, 41, 0, 0, 2 };
+CLientLists.Run();
