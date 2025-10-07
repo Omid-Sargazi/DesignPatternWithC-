@@ -63,11 +63,14 @@
 ////===========================================
 
 
+using AdvancedCSharp.DataStructure2;
 using AdvancedCSharp.LeetCode;
 using AdvancedCSharp.Sorting;
 
 Console.WriteLine("LeetCode");
 var nums = new int[]{3,4,5,6,0,1,2};
-Console.WriteLine(MinInRotatedArray.Run(nums));
+//Console.WriteLine(MinInRotatedArray.Run(nums));
 
-Bubble.RunBubble(nums);
+//Bubble.RunBubble(nums);
+
+Sortings.Bubble(nums);
