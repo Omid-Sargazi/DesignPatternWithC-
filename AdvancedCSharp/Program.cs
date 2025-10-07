@@ -75,4 +75,5 @@ var nums = new int[]{3,4,5,6,0,1,2};
 
 //Sortings.Bubble(nums);
 //Sortings.Selection(nums);
-Sortings.Insertion(nums);
+//Sortings.Insertion(nums);
+Sortings.QuickSort(nums,0,nums.Length-1);
