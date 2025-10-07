@@ -74,4 +74,5 @@ var nums = new int[]{3,4,5,6,0,1,2};
 //Bubble.RunBubble(nums);
 
 //Sortings.Bubble(nums);
-Sortings.Selection(nums);
+//Sortings.Selection(nums);
+Sortings.Insertion(nums);
