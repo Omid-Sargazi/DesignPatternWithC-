@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpAndLeetCode", "..\CSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructureInCSharp", "..\DataStructureInCSharp\DataStructureInCSharp.csproj", "{C64C3306-7054-4C1A-B7C6-A854F655B8DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RefactoringGuru", "..\RefactoringGuru\RefactoringGuru.csproj", "{65AB0B2C-2F14-495B-9FD6-72EFDA3A4F89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{C64C3306-7054-4C1A-B7C6-A854F655B8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C64C3306-7054-4C1A-B7C6-A854F655B8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C64C3306-7054-4C1A-B7C6-A854F655B8DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65AB0B2C-2F14-495B-9FD6-72EFDA3A4F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65AB0B2C-2F14-495B-9FD6-72EFDA3A4F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65AB0B2C-2F14-495B-9FD6-72EFDA3A4F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65AB0B2C-2F14-495B-9FD6-72EFDA3A4F89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
