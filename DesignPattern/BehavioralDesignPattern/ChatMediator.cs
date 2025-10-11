@@ -56,4 +56,19 @@ namespace DesignPattern.BehavioralDesignPattern
             }
         }
     }
+
+    public class ClientMediator
+    {
+        public static void Run()
+        {
+            IChatMediator mediator = new ChatMediator();
+
+            var user1 = new User("Alice", mediator);
+            var user2 = new User("Bob", mediator);
+            var user3 = new User("Charlie", mediator);
+
+            user1.SendMessage("Hello there");
+            user2.SendMessage("Hi Alice");
+        }
+    }
 }
