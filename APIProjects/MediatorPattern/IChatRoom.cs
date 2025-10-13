@@ -73,9 +73,41 @@
             _handlerMappings = handlerMappings;
             _serviceProvider = serviceProvider;
         }
-        public Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default)
+        public async Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var requestType = request.GetType();
+
+            if (!_handlerMappings.TryGetValue(requestType, out var handlerType))
+            {
+                throw new Exception($"No handler registered for request type {requestType}");
+            }
+
+            var handler = _serviceProvider.GetService(handlerType);
+            if (handler == null)
+            {
+                throw new Exception($"Handler for type {handlerType} not found in DI container");
+            }
+            var handleMethod = handlerType.GetMethod("Handle");
+            if (handleMethod != null)
+            {
+                throw new Exception($"Handle method not found on {handlerType}");
+            }
+
+            var result = handleMethod.Invoke(handler, new object?[] { request, cancellationToken });
+            return await (Task<TResult>)result;
+
+        }
+    }
+
+    public record GetUserQuery(int UserId) : IRequest<UserDto>;
+
+    public record UserDto(string Name, string Email);
+
+    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
+    {
+        public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        {
+            return new UserDto("John", "O@o.com");
         }
     }
 }
