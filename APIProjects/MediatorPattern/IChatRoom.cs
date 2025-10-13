@@ -53,8 +53,8 @@
 
     public interface IRequest<TResult>{}
 
-    public interface IRequestHandler<TResult, TRequest>
+    public interface IRequestHandler<TRequest, TResult> where TRequest : IRequest<TResult>
     {
-        TResult Handle(TRequest request);
+        Task<TResult> Handle(TRequest request,CancellationToken  cancellationToken);
     }
 }
