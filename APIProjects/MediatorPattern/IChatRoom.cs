@@ -57,4 +57,25 @@
     {
         Task<TResult> Handle(TRequest request,CancellationToken  cancellationToken);
     }
+
+    public interface IMediator
+    {
+        Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken=default);
+    }
+
+    public class Mediator : IMediator
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly Dictionary<Type, Type> _handlerMappings;
+
+        public Mediator(IServiceProvider serviceProvider, Dictionary<Type,Type> handlerMappings)
+        {
+            _handlerMappings = handlerMappings;
+            _serviceProvider = serviceProvider;
+        }
+        public Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
