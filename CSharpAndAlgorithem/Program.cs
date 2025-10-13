@@ -7,4 +7,7 @@ Console.WriteLine("Hello, World!");
 int[] arr = new[] { 1, 7, -9, 74, -10, 77, 41, 0, 0, 2 };
 //CLientLists.Run();
 var res = LongestSubstringWithoutRepeatingChar.Run("Omidddd");
-Console.WriteLine(res);
+//Console.WriteLine(res);
+
+var res2 = LongestSubstringWithoutRepeatingChar.SubArray([2, 3, 1, 5, 1, 2], 3);
+Console.WriteLine(res2);
