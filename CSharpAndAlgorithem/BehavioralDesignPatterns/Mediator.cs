@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -115,5 +116,76 @@ namespace CSharpAndAlgorithem.BehavioralDesignPatterns
             await Task.Delay(100);
             return true;
         }
+    }
+
+    public interface IMainMediator
+    {
+        Task<TResult> Send<TResult>(IRequest<TResult> request,CancellationToken cancellationToken);
+    }
+
+    public class MainMediator : IMainMediator
+    {
+        private readonly IServiceProvider _serviceProvider;
+        protected static Dictionary<Type, Type> _handlersType = new();
+
+        public MainMediator(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+
+        }
+
+        public static void RegisterHandlers(params Assembly[] assemblies)
+        {
+            foreach (var assembly in assemblies)
+            {
+                var handlerTypes = assembly.GetTypes()
+                    .Where(t => t.GetInterfaces().Any(i =>
+                        i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>))).ToList();
+
+                foreach (var handlerType in handlerTypes)
+                {
+                    var interfaceType = handlerType.GetInterfaces().FirstOrDefault(i => i.IsGenericType
+                        && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>));
+                    var requestType = interfaceType.GetGenericArguments()[0];
+                   
+                }
+            }
+        }
+
+        public async Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken)
+        {
+            var requestType = request.GetType();
+
+            if (!_handlersType.ContainsKey(requestType))
+            {
+                throw new InvalidOperationException($"No handler registered for request type: {requestType}");
+            }
+
+            var handlerType = _handlersType[requestType];
+            var handler = _serviceProvider.GetService(handlerType);
+
+            if (handler == null)
+            {
+                throw new InvalidOperationException($"Handler not found in DI container: {handlerType}");
+            }
+
+            // پیدا کردن متد Handle با Reflection
+            var handleMethod = handlerType.GetMethod("Handle");
+            if (handleMethod == null)
+            {
+                throw new InvalidOperationException($"Handle method not found in handler: {handlerType}");
+            }
+
+            // فراخوانی متد Handle
+            var result = handleMethod.Invoke(handler, new object[] { request, cancellationToken });
+
+            if (result is Task<TResult> taskResult)
+            {
+                return await taskResult;
+            }
+
+            throw new InvalidOperationException("Handler did not return expected task type");
+        }
+    }
     }
 }
