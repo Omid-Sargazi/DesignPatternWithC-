@@ -89,5 +89,18 @@ namespace RefactoringGuru.BehavioralDesignPattern
                 _onEnd.Execute();
             }
         }
+
+        public class CLientCommandPattern
+        {
+            public static void Run()
+            {
+                Invoker invoker = new Invoker();
+                invoker.SetOnStart(new SimpleCommand("Say Hi"));
+                Receiver receiver = new Receiver();
+                invoker.SetOnFinish(new ComplexCommand(receiver, "send email", "save report"));
+                invoker.DoSomethingImportant();
+            }
+
+        }
     }
 }
