@@ -10,6 +10,8 @@ namespace ReflectionsInCSharp1
             C c = new C();
             F f = new F();
             ClientReflection.Run(f);
+
+            ClientGenericReflection.Run();
         }
     }
 }

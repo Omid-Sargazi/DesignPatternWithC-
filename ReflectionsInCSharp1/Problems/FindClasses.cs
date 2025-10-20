@@ -7,6 +7,28 @@ using System.Threading.Tasks;
 
 namespace ReflectionsInCSharp1.Problems
 {
+    public interface IHandler<T>
+    {
+        void Handle(T message);
+    }
+
+    public class StringHandler : IHandler<string>
+    {
+        public void Handle(string message)
+        {
+            Console.WriteLine($"StringHandler handled: {message}");
+        }
+    }
+
+    public class IntHandler:IHandler<int>
+    {
+        public void Handle(int message)
+        {
+            Console.WriteLine($"IntHandler handled: {message}");
+        }
+    }
+
+
     public interface A
     {
         void MethodA();
@@ -82,6 +104,36 @@ namespace ReflectionsInCSharp1.Problems
             }
 
 
+        }
+    }
+
+    public class ClientGenericReflection
+    {
+        public static void Run()
+        {
+            var assemble = Assembly.GetExecutingAssembly();
+
+            var genericInterface = typeof(IHandler<>);
+
+            var handlerTypes = assemble.GetTypes()
+                .Where(t => !t.IsInterface && !t.IsAbstract)
+                .Where(t => t.GetInterfaces()
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericInterface)).ToList();
+
+            foreach (var handlerType in handlerTypes)
+            {
+                Console.WriteLine($"Found handler: {handlerType.Name}");
+
+                var instance = Activator.CreateInstance(handlerType);
+
+                var handleMethod = handlerType.GetMethod("Handle");
+
+                var parameterType = handleMethod.GetParameters().First().ParameterType;
+                object? argument = parameterType ==
+                    typeof(string) ? "Helllo Reflection" : parameterType == typeof(int) ? 123 : null;
+
+                handleMethod.Invoke(instance, new object?[] { argument });
+            }
         }
     }
 }
