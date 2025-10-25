@@ -12,7 +12,7 @@ namespace CSharpAndDesignPattern.BehavioralDesignPattern.ChainOfResponsibility
         object Handle(object request);
     }
 
-    abstract class AbstractHandler : IHandler
+    public abstract class AbstractHandler : IHandler
     {
         private IHandler _nextHandler;
 
@@ -22,7 +22,7 @@ namespace CSharpAndDesignPattern.BehavioralDesignPattern.ChainOfResponsibility
            return handler;
         }
 
-        public object Handle(object request)
+        public virtual object Handle(object request)
         {
             if (_nextHandler != null)
             {
@@ -32,6 +32,21 @@ namespace CSharpAndDesignPattern.BehavioralDesignPattern.ChainOfResponsibility
             {
 
                 return null;
+            }
+        }
+    }
+
+    public class MonkeyHandler : AbstractHandler
+    {
+        public override object Handle(object request)
+        {
+            if ((request as string) == "Banana")
+            {
+                return $"Monkey: I'll eat the {request.ToString()}.\n";
+            }
+            else
+            {
+                return base.Handle(request);
             }
         }
     }
