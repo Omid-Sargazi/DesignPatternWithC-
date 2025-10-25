@@ -80,4 +80,25 @@ namespace CSharpAndDesignPattern.BehavioralDesignPattern.ChainOfResponsibility
             }
         }
     }
+
+    public class Customer
+    {
+        public bool IsVIP { get; set; }
+        public bool IsRegular { get; set; }
+        public bool ISNew { get; set; }
+    }
+
+    public class ClientDiscount
+    {
+        public decimal CalculateDiscount(Customer customer, decimal orderTotal)
+        {
+            return customer switch
+            {
+                {IsVIP:true}=>orderTotal*0.8m,
+                {IsRegular:true}=>orderTotal*0.9m,
+                {ISNew:true}=>orderTotal*.095m,
+            };
+        }
+    }
+
 }
