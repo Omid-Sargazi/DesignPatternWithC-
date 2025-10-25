@@ -48,7 +48,22 @@ namespace SolvingProblemWithCSharp.Sorting
                 }
             }
             Console.WriteLine($"After Sorting:  {string.Join(",", arr)}");
+        }
 
+        public static void InsertionSort(int[] arr)
+        {
+            Console.WriteLine($"Before Insertion Sorting:  {string.Join(",", arr)}");
+            int n = arr.Length;
+            for (int i = 0; i < n; i++)
+            {
+                int current = arr[i];
+                int j = i - 1;
+                while (j >= 0 && arr[j]>current)
+                {
+                    
+                }
+            }
+            Console.WriteLine($"Before Insertion Sorting:  {string.Join(",", arr)}");
 
         }
     }
