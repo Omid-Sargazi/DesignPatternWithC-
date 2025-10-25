@@ -101,4 +101,30 @@ namespace CSharpAndDesignPattern.BehavioralDesignPattern.ChainOfResponsibility
         }
     }
 
+
+    public abstract class DiscountHandler
+    {
+        protected DiscountHandler _nextHandler;
+
+        public DiscountHandler SetNextHandler(DiscountHandler nextHandler)
+        {
+            _nextHandler = nextHandler;
+            return _nextHandler;
+        }
+
+        public abstract decimal ClculateDiscount(Customer customer, decimal orderTotal);
+    }
+
+    public class VIPDiscountHandler:DiscountHandler
+    {
+        public override decimal ClculateDiscount(Customer customer, decimal orderTotal)
+        {
+            if (customer.IsVIP)
+            {
+                return orderTotal * 0.8m;
+            }
+
+            return _nextHandler.ClculateDiscount(customer, orderTotal);
+        }
+    }
 }
