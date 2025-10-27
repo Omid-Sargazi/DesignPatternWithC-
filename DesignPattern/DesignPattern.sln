@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionsInCSharp1", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvingProblemWithCSharp", "..\SolvingProblemWithCSharp\SolvingProblemWithCSharp.csproj", "{A5E441D9-4B6D-4F3C-A1CB-E66ABEE3D5C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares", "..\Middlewares\Middlewares.csproj", "{91C71CC0-D968-43DF-B7DA-9645193527C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +176,10 @@ Global
 		{A5E441D9-4B6D-4F3C-A1CB-E66ABEE3D5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E441D9-4B6D-4F3C-A1CB-E66ABEE3D5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E441D9-4B6D-4F3C-A1CB-E66ABEE3D5C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C71CC0-D968-43DF-B7DA-9645193527C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C71CC0-D968-43DF-B7DA-9645193527C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C71CC0-D968-43DF-B7DA-9645193527C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C71CC0-D968-43DF-B7DA-9645193527C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
