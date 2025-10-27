@@ -20,4 +20,22 @@ namespace LINQProblemsInCSharp.Problems1
         public int Add(int a, int b) => a + b;
         public int Mul(int a, int b) => a * b;
     }
+
+    public class DelegateExample2
+    {
+        public void Run(int a, int b, Func<int,int,int> cal)
+        {
+            Console.WriteLine("Original delegate: " + cal(a, b));
+
+            Console.WriteLine("Add: " + Add(a, b));
+            Console.WriteLine("Mul: " + Mul(a, b));
+            cal = Add;
+            Console.WriteLine(cal(a,b));
+            cal += Mul;
+            Console.WriteLine(cal(a,b));
+        }
+
+        public int Add(int a, int b) => a + b;
+        public int Mul(int a, int b) => a * b;
+    }
 }

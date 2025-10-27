@@ -7,8 +7,11 @@ namespace LINQProblemsInCSharp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            DelegateExample example = new DelegateExample();
-            example.Run(3,2);
+            //DelegateExample example = new DelegateExample();
+            //example.Run(3,2);
+
+            DelegateExample2 delegateExample2 = new DelegateExample2();
+            delegateExample2.Run(7,2,(x,y)=>x);
         }
     }
 }
