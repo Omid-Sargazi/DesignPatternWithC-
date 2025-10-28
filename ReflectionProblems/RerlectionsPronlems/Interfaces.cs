@@ -62,4 +62,34 @@ namespace ReflectionProblems.RerlectionsPronlems
             return FindAllInterfaces(Assembly.GetExecutingAssembly());
         }
     }
+
+    public class AssemblyClasses
+    {
+        public IEnumerable<Type> FindAllConcreteClasses(Assembly assembly)
+        {
+            var types = assembly.GetTypes();
+            var classes = types.Where(t => t.IsClass && !t.IsAbstract);
+            return classes;
+        }
+    }
+
+    public class InterfaceImplementations
+    {
+        private Dictionary<Type, List<Type>> InterfaceToClassMap = new();
+        public IEnumerable<Type> FindImplementingClasses(Type interfaceType, IEnumerable<Type> allClasses)
+        {
+
+            var implementingClasses = new List<Type>();
+
+            foreach (var classType in allClasses)
+            {
+                if (interfaceType.IsAssignableFrom(classType))
+                {
+                    implementingClasses.Add(classType);
+                }
+            }
+
+            return implementingClasses;
+        }
+    }
 }
