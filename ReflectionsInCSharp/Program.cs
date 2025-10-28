@@ -1,4 +1,7 @@
 
+using System.Reflection;
+using ReflectionsInCSharp.Problem01;
+
 namespace ReflectionsInCSharp
 {
     public class Program
@@ -20,6 +23,9 @@ namespace ReflectionsInCSharp
             {
                 app.MapOpenApi();
             }
+
+            AssemblyInterfaceMapper assembly = new AssemblyInterfaceMapper();
+            assembly.Execute(Assembly.GetExecutingAssembly());
 
             app.UseHttpsRedirection();
 
