@@ -45,19 +45,43 @@ namespace ReflectionsInCSharp.Problem01
 
     public class AssemblyInterfaceMapper
     {
-        public void Execute(Assembly assembly)
+        public InterfaceRegistry Execute(Assembly assembly)
         {
+            var registry = new InterfaceRegistry();
             var types = assembly.GetTypes();
+           
 
             var interfaces = types.Where(t => t.IsInterface);
             var classes = types.Where(t => t.IsClass && !t.IsAbstract);
 
 
 
-            foreach (var type in types)
+            foreach (var interfaceType in interfaces)
+            {
+                var implementingClasses = classes.Where(c => interfaceType.IsAssignableFrom(c));
+
+                foreach (var implClass in implementingClasses)
+                {
+                    RegisterGeneric(registry, interfaceType, implClass);
+                }
+            }
+
+
+                foreach (var type in types)
             {
                 Console.WriteLine(type);
             }
+
+            return registry;
+        }
+
+        private void RegisterGeneric(InterfaceRegistry registry, Type interfaceType, Type implementationType)
+        {
+            var method = typeof(InterfaceRegistry)
+                .GetMethod("Register")
+                .MakeGenericMethod(interfaceType, implementationType);
+
+            method.Invoke(registry, null);
         }
     }
 
