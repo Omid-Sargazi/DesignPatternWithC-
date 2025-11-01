@@ -55,6 +55,15 @@ namespace LINQProblems.Problems01
 
             var res10 = people.Average(p => p.Age);
 
+            var products = new List<Product>
+            {
+                new Product { Name = "لپ‌تاپ", Category = "الکترونیک", Price = 450 },
+                new Product { Name = "ماوس", Category = "الکترونیک", Price = 50 },
+                new Product { Name = "کتاب", Category = "آموزشی", Price = 30 },
+                new Product { Name = "هدفون", Category = "الکترونیک", Price = 150 },
+                new Product { Name = "تلویزیون", Category = "الکترونیک", Price = 800 }
+            };
+
         }
     }
 
@@ -62,6 +71,13 @@ namespace LINQProblems.Problems01
     {
         public string Name { get; set; }
         public int Age { get; set; }
+    }
+
+    public class Product
+    {
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public decimal Price { get; set; }
     }
 
 
