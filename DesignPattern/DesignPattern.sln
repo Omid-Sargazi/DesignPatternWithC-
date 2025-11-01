@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQProblemsInCSharp", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionsInCSharp", "..\ReflectionsInCSharp\ReflectionsInCSharp.csproj", "{CCEFCB27-1C85-45E6-9A7C-1E82B3EC9EFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQProblems", "..\LINQProblems\LINQProblems.csproj", "{20E97B4D-307C-4A53-B11D-16DE1063112B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,6 +194,10 @@ Global
 		{CCEFCB27-1C85-45E6-9A7C-1E82B3EC9EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCEFCB27-1C85-45E6-9A7C-1E82B3EC9EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCEFCB27-1C85-45E6-9A7C-1E82B3EC9EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E97B4D-307C-4A53-B11D-16DE1063112B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E97B4D-307C-4A53-B11D-16DE1063112B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E97B4D-307C-4A53-B11D-16DE1063112B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E97B4D-307C-4A53-B11D-16DE1063112B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
