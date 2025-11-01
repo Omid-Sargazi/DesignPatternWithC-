@@ -49,7 +49,11 @@ namespace LINQProblems.Problems01
                 Console.WriteLine($"{res7.Name},{res7.Age}");
             }
 
-            var res8 = 
+            var res8 = people.Any(p => p.Name == "Bahar");
+
+            var res9 = people.Select(p => new { Name = p.Name, Age = p.Age });
+
+            var res10 = people.Average(p => p.Age);
 
         }
     }
