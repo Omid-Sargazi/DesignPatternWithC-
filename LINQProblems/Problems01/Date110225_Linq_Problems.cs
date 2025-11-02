@@ -26,9 +26,31 @@ namespace LINQProblems.Problems01
                     AveragePrice = g.Average(p => p.Price),
                     Products = g.ToList()
                 }).ToList();
+
+
+
+            var students = new List<Student>
+            {
+                new Student { Name = "علی", Courses = new List<string> { "ریاضی", "فیزیک", "شیمی" } },
+                new Student { Name = "سمیرا", Courses = new List<string> { "ریاضی", "ادبیات" } },
+                new Student { Name = "رضا", Courses = new List<string> { "فیزیک", "برنامه‌نویسی" } }
+            };
+
+            var allCourses = students.SelectMany(s => s.Courses)
+                .Distinct().ToList();
+
+
         }
     }
 
 
-    
+    public class Student
+    {
+        public string Name { get; set; }
+        public List<string> Courses { get; set; }
+    }
+
+
+
+
 }
