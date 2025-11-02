@@ -56,6 +56,22 @@ namespace LINQProblems.Problems01
                 TotalExpensiveProducts = g.Count(p => p.Price > 100)
             }).Where(g => g.ExpensiveProducts.Any()).ToList();
 
+            var customers = new List<Customer>
+            {
+                new Customer { Name = "علی", City = "تهران" },
+                new Customer { Name = "بهرام", City = "مشهد" },
+                new Customer { Name = "سمیرا", City = "تهران" },
+                new Customer { Name = "نرگس", City = "اصفهان" },
+                new Customer { Name = "رضا", City = "مشهد" }
+            };
+
+            var res2 = customers.Select(c => c.City).Distinct().ToList();
+
+            var res3 = products.OrderBy(p => p.Category)
+                .ThenByDescending(p => p.Price).ToList();
+
+
+
 
         }
     }
@@ -65,6 +81,12 @@ namespace LINQProblems.Problems01
     {
         public string Name { get; set; }
         public List<string> Courses { get; set; }
+    }
+
+    public class  Customer
+    {
+        public string Name { get; set; }
+        public string City { get; set; }
     }
 
 
