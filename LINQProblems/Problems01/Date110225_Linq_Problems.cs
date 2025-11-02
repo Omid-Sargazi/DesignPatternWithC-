@@ -40,6 +40,23 @@ namespace LINQProblems.Problems01
                 .Distinct().ToList();
 
 
+            var products2 = new List<Product>
+            {
+                new Product { Name = "لپ‌تاپ", Category = "الکترونیک", Price = 450 },
+                new Product { Name = "ماوس", Category = "الکترونیک", Price = 50 },
+                new Product { Name = "کتاب", Category = "آموزشی", Price = 30 },
+                new Product { Name = "هدفون", Category = "الکترونیک", Price = 150 },
+                new Product { Name = "تلویزیون", Category = "الکترونیک", Price = 800 }
+            };
+
+            var res = products2.GroupBy(p => p.Category).Select(g => new
+            {
+                Category = g.Key,
+                ExpensiveProducts = g.Where(p => p.Price > 100).ToList(),
+                TotalExpensiveProducts = g.Count(p => p.Price > 100)
+            }).Where(g => g.ExpensiveProducts.Any()).ToList();
+
+
         }
     }
 
