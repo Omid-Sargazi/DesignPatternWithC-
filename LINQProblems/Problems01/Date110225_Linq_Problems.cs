@@ -70,6 +70,31 @@ namespace LINQProblems.Problems01
             var res3 = products.OrderBy(p => p.Category)
                 .ThenByDescending(p => p.Price).ToList();
 
+            var customers1 = new List<Customer1>
+            {
+                new Customer1 { Id = 1, Name = "علی" },
+                new Customer1 { Id = 2, Name = "بهرام" },
+                new Customer1 { Id = 3, Name = "سمیرا" }
+            };
+
+            var orders = new List<Order>
+            {
+                new Order { OrderId = 101, CustomerId = 1, Amount = 150, OrderDate = DateTime.Now.AddDays(-5) },
+                new Order { OrderId = 102, CustomerId = 2, Amount = 200, OrderDate = DateTime.Now.AddDays(-3) },
+                new Order { OrderId = 103, CustomerId = 1, Amount = 75, OrderDate = DateTime.Now.AddDays(-1) },
+                new Order { OrderId = 104, CustomerId = 3, Amount = 300, OrderDate = DateTime.Now.AddDays(-2) }
+            };
+
+            var orderDetails = from order in orders
+                join customer in customers1 on order.CustomerId equals customer.Id
+                select new
+                {
+                    OrderId = order.OrderId,
+                    CustomerName = customer.Name,
+                    Amount = order.Amount,
+                    OrderDate = order.OrderDate,
+                };
+
 
 
 
@@ -88,6 +113,22 @@ namespace LINQProblems.Problems01
         public string Name { get; set; }
         public string City { get; set; }
     }
+
+    public class Order
+    {
+        public int OrderId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime OrderDate { get; set; }
+    }
+
+    public class Customer1
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+
 
 
 
