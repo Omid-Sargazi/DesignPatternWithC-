@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LINQProblems.Problems02
+{
+
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public decimal Salary { get; set; }
+    }
+    public class Problems02
+    {
+
+        public static void Execute()
+        {
+            var employees = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
+                new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
+                new Employee { Id = 3, Name = "سارا", Department = "فروش", Salary = 55000 },
+                new Employee { Id = 4, Name = "نازنین", Department = "توسعه", Salary = 80000 },
+                new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
+            };
+            var average = employees.Average(e => e.Salary);
+
+            var result1 = employees.Where(e => e.Salary > average)
+                .Select(e => new { Name = e.Name, Dep = e.Department, Salary = e.Salary });
+        }
+    }
+}
