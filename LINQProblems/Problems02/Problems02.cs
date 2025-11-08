@@ -57,6 +57,16 @@ namespace LINQProblems.Problems02
 
             var reult2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1)
                 .SelectMany(g => g.Select(e => new { GroupName = g.Key, Employee = e }));
+
+            var duplicateEmployees = from emp in employeesWithDuplicates
+                group emp by emp.Name into nameGroup
+                where nameGroup.Count() > 1
+                from employee in nameGroup
+                select new
+                {
+                    DuplicateName = nameGroup.Key,
+                    Employee = employee
+                };
         }
     }
 }
