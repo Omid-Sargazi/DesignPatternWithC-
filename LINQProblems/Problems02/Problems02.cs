@@ -41,6 +41,10 @@ namespace LINQProblems.Problems02
                     AverageSalary = g.Average(e => e.Salary),
                     MaxSalary = g.Max(e => e.Salary)  // استفاده از Max برای بهینه‌تر شدن
                 });
+
+            var topEarnersByDept = employees
+                .GroupBy(emp => emp.Department)
+                .Select(group => group.OrderByDescending(emp => emp.Salary).First());
         }
     }
 }
