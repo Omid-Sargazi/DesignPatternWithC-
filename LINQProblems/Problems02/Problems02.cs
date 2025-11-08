@@ -45,6 +45,18 @@ namespace LINQProblems.Problems02
             var topEarnersByDept = employees
                 .GroupBy(emp => emp.Department)
                 .Select(group => group.OrderByDescending(emp => emp.Salary).First());
+
+            var employeesWithDuplicates = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
+                new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
+                new Employee { Id = 3, Name = "علی", Department = "مارکتینگ", Salary = 60000 },
+                new Employee { Id = 4, Name = "سارا", Department = "توسعه", Salary = 75000 },
+                new Employee { Id = 5, Name = "رضا", Department = "پشتیبانی", Salary = 48000 }
+            };
+
+            var reult2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1)
+                .SelectMany(g => g.Select(e => new { GroupName = g.Key, Employee = e }));
         }
     }
 }
