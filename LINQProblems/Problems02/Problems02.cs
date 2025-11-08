@@ -31,6 +31,16 @@ namespace LINQProblems.Problems02
 
             var result1 = employees.Where(e => e.Salary > average)
                 .Select(e => new { Name = e.Name, Dep = e.Department, Salary = e.Salary });
+
+
+            var departmentStats = employees.GroupBy(e => e.Department)
+                .Select(g => new
+                {
+                    Department = g.Key,
+                    EmployeeCount = g.Count(),
+                    AverageSalary = g.Average(e => e.Salary),
+                    MaxSalary = g.Max(e => e.Salary)  // استفاده از Max برای بهینه‌تر شدن
+                });
         }
     }
 }
