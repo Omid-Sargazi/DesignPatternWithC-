@@ -67,6 +67,22 @@ namespace LINQProblems.Problems02
                     DuplicateName = nameGroup.Key,
                     Employee = employee
                 };
+
+            var res3 = employees.GroupBy(e => e.Department).OrderByDescending(g => g.Key)
+                .Select(g => g.OrderByDescending(e => e.Salary)).Take(1);
+
+
+
+
+        }
+
+        public class PagedResult<T>
+        {
+            public int PageNumber { get; set; }
+            public int PageSize { get; set; }
+            public int TotalCount { get; set; }
+            public int TotalPages { get; set; }
+            public IEnumerable<T> Data { get; set; }
         }
     }
 }
