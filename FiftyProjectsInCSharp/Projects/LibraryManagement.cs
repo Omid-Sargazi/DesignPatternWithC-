@@ -47,21 +47,37 @@ namespace FiftyProjectsInCSharp.Projects
         IEnumerable<Book> GetAvailableBooks();
     }
 
+    public interface IBorrowRecordRepository:IRepository<BorrowRecord>
+    {}
+
     public class BookRepository:IBookRepository
     {
+        private readonly List<Book> _books;
+
+        public BookRepository()
+        {
+            _books = new List<Book>
+            {
+                new Book
+                {
+                    Id = 1, Title = "Clean Code", Author = "Robert C. Martin", ISBN = "123", IsAvailable = true
+                },
+                new Book { Id = 2, Title = "Design Patterns", Author = "GoF", ISBN = "456", IsAvailable = false }
+            };
+        }
         public Book GetById(int id)
         {
-            throw new NotImplementedException();
+            return _books.FirstOrDefault(b => b.Id == id);
         }
 
         public IEnumerable<Book> GetAll()
         {
-            throw new NotImplementedException();
+            return _books;
         }
 
         public void Add(Book entity)
         {
-            throw new NotImplementedException();
+            _books.Add(entity);
         }
 
         public void Update(Book entity)
@@ -71,17 +87,55 @@ namespace FiftyProjectsInCSharp.Projects
 
         public void Delete(Book entity)
         {
-            throw new NotImplementedException();
+            _books.Remove(entity);
         }
 
         public IEnumerable<Book> SearchBooks(string searchTerm)
         {
-            throw new NotImplementedException();
+            return _books.Where(b => b.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                                     ||b.Author.Contains(searchTerm,StringComparison.OrdinalIgnoreCase) || 
+                                     b.ISBN.Contains(searchTerm,StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Book> GetAvailableBooks()
         {
-            throw new NotImplementedException();
+            return _books.Where(b => b.IsAvailable);
+        }
+    }
+
+    public interface ICommand
+    {
+
+    }
+
+    public class BorrowBookCommand : ICommand
+    {
+        public int BookId { get; set; }
+        public int UserId { get; set; }
+        public DateTime DueDate { get; set; }
+    }
+
+    public class ReturnBookCommand : ICommand
+    {
+        public int BookId { get; set; }
+        public int UserId { get; set; }
+    }
+
+    public class BorrowBookCommandHandler
+    {
+        private readonly IBookRepository _bookRepository;
+        private readonly IBorrowRecordRepository _borrowRecordRepository;
+
+        public BorrowBookCommandHandler(IBookRepository bookRepository, IBorrowRecordRepository borrowRecordRepository)
+        {
+            _bookRepository = bookRepository;
+            _borrowRecordRepository = borrowRecordRepository;
+        }
+
+
+        public bool Handle(BorrowBookCommand command)
+        {
+            ///////Complete 
         }
     }
 }
