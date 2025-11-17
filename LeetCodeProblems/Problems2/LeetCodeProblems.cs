@@ -41,6 +41,11 @@ namespace LeetCodeProblems.Problems2
             return false;
         }
 
+        public static bool ContainsDuplicateLinq(int[] nums)
+        {
+            return nums.Length !=nums.Distinct().Count();
+        }
+
 
     }
 }
