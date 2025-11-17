@@ -80,4 +80,37 @@ namespace DesignPattern.IteratorPattern
             }
         }
     }
+
+
+    public interface IIteratorr<T>
+    {
+        bool HasNext();
+        string Next();
+    }
+
+    public interface IMyCollection<T> 
+    {
+        void Add(T t);
+        IIteratorr<T> CreateIterator();
+    }
+
+    public class ListIterator<T>:IIteratorr<T>
+    {
+        private readonly List<T> _items;
+        private int _position=0;
+
+        public ListIterator(List<T> collection)
+        {
+            _items = collection;
+        }
+        public bool HasNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Next()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
