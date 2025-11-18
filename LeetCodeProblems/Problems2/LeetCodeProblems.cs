@@ -69,6 +69,34 @@ namespace LeetCodeProblems.Problems2
             return maxProfit;
         }
 
+        public bool IsValid(string s)
+        {
+            Dictionary<char, char> mapping = new Dictionary<char, char> {
+                { ')', '(' },
+                { '}', '{' },
+                { ']', '[' }
+            };
+
+            Stack<char> stack = new Stack<char>();
+            foreach (char c in s)
+            {
+                if (mapping.ContainsKey(c))
+                {
+                    stack.Push(c);
+                }
+                else if(mapping.ContainsKey(c))
+                {
+                    if (stack.Count == 0 || stack.Pop() != mapping[c])
+                    {
+                        return false;
+                    }
+                }
+
+            }
+
+            return stack.Count == 0;
+        }
+
 
     }
 }
