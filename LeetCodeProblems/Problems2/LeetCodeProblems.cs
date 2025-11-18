@@ -126,5 +126,30 @@ namespace LeetCodeProblems.Problems2
         }
 
 
+        public bool IsValid3(string s)
+        {
+            Stack<char> Seen = new Stack<char>();
+
+            foreach (var c in s)
+            {
+                if (c == '(' || c == '{' || c == '[')
+                {
+                    Seen.Push(c);
+                }
+
+                
+                else
+                {
+                    if(Seen.Count==0) return false;
+
+                    var top = Seen.Pop();
+
+                    if ((c == ')' && top != '(') || (c == '}' && top != '{') || (c == ']' && top != '[')) return false;
+                }
+            }
+
+            return Seen.Count == 0;
+        }
+
     }
 }
