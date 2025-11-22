@@ -21,6 +21,9 @@ namespace FiftyProjectsInCSharp
                 app.MapOpenApi();
             }
 
+            app.UseAuthorization();
+            app.UseAuthorization();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
