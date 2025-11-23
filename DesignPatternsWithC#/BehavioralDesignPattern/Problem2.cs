@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesignPatternsWithC_.BehavioralDesignPattern
 {
-    public class SimpleCollection2
+    public class SimpleCollection2: IIterableCollection
     {
         private string[] _items = { "Apple", "Banana", "Cherry" };
 
@@ -16,6 +16,10 @@ namespace DesignPatternsWithC_.BehavioralDesignPattern
         }
 
         public int Count => _items.Length;
+        public IIterator2 CreateIterator()
+        {
+            return new SimpleIteratr2(this);
+        }
     }
 
     public interface IIterator2
@@ -50,4 +54,11 @@ namespace DesignPatternsWithC_.BehavioralDesignPattern
             return item;
         }
     }
+
+    public interface IIterableCollection
+    {
+        IIterator2 CreateIterator();
+    }
+
+
 }
