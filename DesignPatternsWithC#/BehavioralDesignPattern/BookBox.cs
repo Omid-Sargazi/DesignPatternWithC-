@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace DesignPatternsWithC_.BehavioralDesignPattern
 {
-    public class BookBox
+    public class BookBox:IBookCollection
     {
         private string[] _books = { "C# Basics", "Design Patterns", "Clean Code", "Algorithms" };
 
         public string GetBook(int index) => _books[index];
         public int BookCount => _books.Length;
+        public IBookIterator CreateIterator()
+        {
+            return new SimpleBookIterator(this);
+        }
     }
 
     public interface IBookIterator
@@ -70,6 +74,52 @@ namespace DesignPatternsWithC_.BehavioralDesignPattern
             iterator.Reset();
             Console.WriteLine("\nReading again:");
             Console.WriteLine(iterator.GetNextBook()); // C# Basics
+        }
+    }
+
+    public interface IBookCollection
+    {
+        IBookIterator CreateIterator();
+    }
+
+
+    public interface Beshmor
+    {
+        bool HasValue();
+        object Next();
+    }
+
+    public class ToyBag
+    {
+        public object[] _toys = { "Car", "Toy", "ball", "Puzzle" };
+
+        public Beshmor CreateBeshmor()
+        {
+            return new ToyBagBeshmor(this);
+        }
+    }
+
+    public class ToyBagBeshmor : Beshmor
+    {
+        private ToyBag _bag;
+        private int _current = 0;
+
+        public ToyBagBeshmor(ToyBag bag)
+        {
+            _bag = bag;
+        }
+        public bool HasValue()
+        {
+            return _current < _bag._toys.Length;
+        }
+
+        public object Next()
+        {
+            if (!HasValue()) return null;
+
+            object toy = _bag._toys[_current];
+            _current++;
+            return toy;
         }
     }
 }
