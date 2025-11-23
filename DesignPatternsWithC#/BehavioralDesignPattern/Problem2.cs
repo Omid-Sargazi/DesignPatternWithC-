@@ -6,30 +6,30 @@ using System.Threading.Tasks;
 
 namespace DesignPatternsWithC_.BehavioralDesignPattern
 {
-    public class SimpleCollection
+    public class SimpleCollection2
     {
         private string[] _items = { "Apple", "Banana", "Cherry" };
 
-        public string GetItem(int index)
+        public string GetItems(int index)
         {
             return _items[index];
         }
 
-        public int Count=> _items.Length;
+        public int Count => _items.Length;
     }
 
-    public interface IIterator
+    public interface IIterator2
     {
         bool HasNext();
         object Next();
     }
 
-    public class SimpleIterator:IIterator
+    public class SimpleIteratr2:IIterator2
     {
-        private SimpleCollection _collection;
+        private readonly SimpleCollection2 _collection;
         private int _currentIndex = 0;
 
-        public SimpleIterator(SimpleCollection collection)
+        public SimpleIteratr2(SimpleCollection2 collection)
         {
             _collection = collection;
         }
@@ -45,23 +45,9 @@ namespace DesignPatternsWithC_.BehavioralDesignPattern
                 throw new InvalidOperationException("No more items");
             }
 
-            var item = _collection.GetItem(_currentIndex);
+            var item = _collection.GetItems(_currentIndex);
             _currentIndex++;
             return item;
-        }
-    }
-
-    public class UseIterator
-    {
-        public static void Execute()
-        {
-            var collection = new SimpleCollection();
-            var iterator = new SimpleIterator(collection);
-
-            while (iterator.HasNext())
-            {
-                Console.WriteLine(iterator.Next());
-            }
         }
     }
 }
