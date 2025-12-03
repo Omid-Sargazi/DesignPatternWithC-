@@ -63,6 +63,7 @@ namespace AuthProblem1
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
 
