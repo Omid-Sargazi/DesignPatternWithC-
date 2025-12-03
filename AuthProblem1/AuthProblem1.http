@@ -1,0 +1,6 @@
+@AuthProblem1_HostAddress = http://localhost:5213
+
+GET {{AuthProblem1_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
