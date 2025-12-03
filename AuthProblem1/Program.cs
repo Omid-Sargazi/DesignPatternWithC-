@@ -72,6 +72,7 @@ namespace AuthProblem1
 
             app.MapControllers();
 
+
             app.UseStaticFiles();
             app.MapControllerRoute(
                 name: "default",
