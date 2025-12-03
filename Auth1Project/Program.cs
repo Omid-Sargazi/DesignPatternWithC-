@@ -1,6 +1,8 @@
 ﻿
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Auth1Project
@@ -35,6 +37,19 @@ namespace Auth1Project
                 };
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser().Build();
+
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+
+                options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+
+                options.AddPolicy("RequireEmail", policy => policy.RequireClaim(ClaimTypes.Email));
+                options.AddPolicy("Over18", policy => policy.Requirements.Add(new MinimumAgeRequirement(18)));
+            });
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
@@ -46,8 +61,8 @@ namespace Auth1Project
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
-
+            app.UseRouting();          
+            app.UseAuthentication();   
             app.UseAuthorization();
 
 
