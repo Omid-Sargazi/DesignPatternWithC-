@@ -1,4 +1,5 @@
 
+using AuthProblem1.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -41,6 +42,8 @@ namespace AuthProblem1
                     options.ExpireTimeSpan = TimeSpan.FromDays(30);
                     options.SlidingExpiration = true;
                 });
+
+            builder.Services.AddScoped<JwtService>();
 
 
 
