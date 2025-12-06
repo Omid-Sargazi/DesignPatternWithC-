@@ -115,5 +115,8 @@ namespace DesignPatternsInCSharp.BehavioralDesignPattern.IteratorPatterns
             _songs = _songs.OrderBy(x => rnd.Next()).ToList();
             Reset();
         }
+
+
+
     }
 }
