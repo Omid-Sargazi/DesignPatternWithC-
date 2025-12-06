@@ -52,4 +52,22 @@ namespace DesignPatternsInCSharp.BehavioralDesignPattern.IteratorPatterns
         string CurrentSong();  // آهنگ جاری
         void Reset();         // از اول شروع کن
     }
+
+    public class MusicApp
+    {
+        public static void Main()
+        {
+            IMusicPlayer player = new Playlist();
+
+            Console.WriteLine("🎵 Starting Music Player...\n");
+
+            // پخش ۶ آهنگ (بیشتر از تعداد واقعی)
+            for (int i = 0; i < 6; i++)
+            {
+                Console.WriteLine(player.PlayNext());
+            }
+
+            Console.WriteLine($"\nCurrent Song: {player.CurrentSong()}");
+        }
+    }
 }
