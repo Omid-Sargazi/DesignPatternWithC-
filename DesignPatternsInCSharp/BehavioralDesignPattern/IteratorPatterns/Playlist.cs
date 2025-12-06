@@ -70,4 +70,50 @@ namespace DesignPatternsInCSharp.BehavioralDesignPattern.IteratorPatterns
             Console.WriteLine($"\nCurrent Song: {player.CurrentSong()}");
         }
     }
+
+    public class SmartPlaylist : IMusicPlayer
+    {
+        private List<string> _songs = new List<string>();
+        private int _currentIndex = 0;
+
+        public void AddSong(string song)
+        {
+            _songs.Add(song);
+        }
+
+        public bool HasNextSong() => _currentIndex < _songs.Count;
+
+        public string PlayNext()
+        {
+            if (!HasNextSong())
+            {
+                if (_songs.Count == 0)
+                    return "Playlist is empty!";
+
+                Reset();
+                return "🔁 Restarting playlist...";
+            }
+
+            string song = _songs[_currentIndex];
+            _currentIndex++;
+            return $"🎵 Playing: {song}";
+        }
+
+        public string CurrentSong()
+        {
+            if (_currentIndex == 0 || _currentIndex > _songs.Count)
+                return "No song playing";
+
+            return _songs[_currentIndex - 1];
+        }
+
+        public void Reset() => _currentIndex = 0;
+
+        public void Shuffle()
+        {
+            Random rnd = new Random();
+            _songs = _songs.OrderBy(x => rnd.Next()).ToList();
+            Reset();
+        }
+    }
 }
