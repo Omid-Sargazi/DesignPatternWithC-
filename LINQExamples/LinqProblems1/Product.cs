@@ -122,6 +122,74 @@ namespace LINQExamples.LinqProblems1
             Console.WriteLine($"Total Inventory Value: ${totalValue}");
             Console.WriteLine($"Average Product Price: ${averagePrice:F2}");
             Console.WriteLine($"Most Expensive Product: {mostExpensive.Name} (${mostExpensive.Price})");
+
+
+
+            int[] dailySales = { 120, 85, 110, 95, 130, 145, 80, 115, 125, 100, 90, 140 };
+
+            Console.WriteLine("Daily Sales: " + string.Join(", ", dailySales));
+
+            // 1. بیشترین و کمترین فروش
+            int maxSale = dailySales.Max();
+            int minSale = dailySales.Min();
+            int maxDay = Array.IndexOf(dailySales, maxSale) + 1;
+            int minDay = Array.IndexOf(dailySales, minSale) + 1;
+
+            Console.WriteLine($"\n1. Max Sale: Day {maxDay} = {maxSale}");
+            Console.WriteLine($"   Min Sale: Day {minDay} = {minSale}");
+
+            // 2. میانگین فروش
+            double averageSale = dailySales.Average();
+            Console.WriteLine($"\n2. Average Sale: {averageSale:F2}");
+
+            // 3. روزهایی با فروش بالاتر از میانگین
+            var aboveAverageDays = dailySales
+                .Select((sale, index) => new { Day = index + 1, Sale = sale })
+                .Where(x => x.Sale > averageSale)
+                .ToList();
+
+            Console.WriteLine($"\n3. Days with above average sales:");
+            foreach (var day in aboveAverageDays)
+            {
+                Console.WriteLine($"   Day {day.Day}: {day.Sale} (+{day.Sale - averageSale:F1})");
+            }
+
+            // 4. رشد/کاهش روزانه
+            Console.WriteLine("\n4. Daily Change:");
+            for (int i = 1; i < dailySales.Length; i++)
+            {
+                int change = dailySales[i] - dailySales[i - 1];
+                string trend = change > 0 ? "📈" : change < 0 ? "📉" : "➡️";
+                Console.WriteLine($"   Day {i + 1}: {dailySales[i]} ({trend} {Math.Abs(change)})");
+            }
+
+            // 5. بهترین دوره ۳ روزه متوالی
+            int bestThreeDaySum = 0;
+            int bestStartDay = 0;
+
+            for (int i = 0; i <= dailySales.Length - 3; i++)
+            {
+                int threeDaySum = dailySales[i] + dailySales[i + 1] + dailySales[i + 2];
+                if (threeDaySum > bestThreeDaySum)
+                {
+                    bestThreeDaySum = threeDaySum;
+                    bestStartDay = i;
+                }
+            }
+
+            Console.WriteLine($"\n5. Best 3-day period:");
+            Console.WriteLine($"   Days {bestStartDay + 1}-{bestStartDay + 3}: " +
+                             $"{dailySales[bestStartDay]} + {dailySales[bestStartDay + 1]} + {dailySales[bestStartDay + 2]} = {bestThreeDaySum}");
+
+            // 6. آمار اضافی
+            int totalSales = dailySales.Sum();
+            int daysAbove100 = dailySales.Count(s => s > 100);
+            double percentageAboveAverage = (double)aboveAverageDays.Count / dailySales.Length * 100;
+
+            Console.WriteLine($"\n6. Additional Statistics:");
+            Console.WriteLine($"   Total Sales: {totalSales}");
+            Console.WriteLine($"   Days with sales > 100: {daysAbove100}");
+            Console.WriteLine($"   Percentage of days above average: {percentageAboveAverage:F1}%");
         }
     }
 }
