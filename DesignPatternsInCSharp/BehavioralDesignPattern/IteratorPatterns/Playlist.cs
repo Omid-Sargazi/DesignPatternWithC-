@@ -6,12 +6,42 @@ using System.Threading.Tasks;
 
 namespace DesignPatternsInCSharp.BehavioralDesignPattern.IteratorPatterns
 {
-    public class Playlist
+    public class Playlist : IMusicPlayer
     {
-        private string[] _songs = { "Song1", "Song2", "Song3", "Song4" };
+        private string[] _songs = { "Shape of You", "Blinding Lights", "Dance Monkey", "Levitating" };
+        private int _currentIndex = 0;
 
-        public string GetSong(int index) => _songs[index];
-        public int SongCount => _songs.Length;
+        // اینترفیس IMusicPlayer را پیاده‌سازی می‌کنیم
+        public bool HasNextSong()
+        {
+            return _currentIndex < _songs.Length;
+        }
+
+        public string PlayNext()
+        {
+            if (!HasNextSong())
+            {
+                Reset();  // به ابتدا برگردان
+                return "Playlist restarted!";
+            }
+
+            string song = _songs[_currentIndex];
+            _currentIndex++;
+            return $"Now playing: {song}";
+        }
+
+        public string CurrentSong()
+        {
+            if (_currentIndex == 0 || _currentIndex > _songs.Length)
+                return "No song playing";
+
+            return _songs[_currentIndex - 1];
+        }
+
+        public void Reset()
+        {
+            _currentIndex = 0;
+        }
     }
 
 
