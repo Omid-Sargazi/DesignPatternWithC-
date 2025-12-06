@@ -13,4 +13,13 @@ namespace DesignPatternsInCSharp.BehavioralDesignPattern.IteratorPatterns
         public string GetSong(int index) => _songs[index];
         public int SongCount => _songs.Length;
     }
+
+
+    public interface IMusicPlayer
+    {
+        bool HasNextSong();    // آیا آهنگ بعدی وجود دارد؟
+        string PlayNext();     // آهنگ بعدی را پخش کن
+        string CurrentSong();  // آهنگ جاری
+        void Reset();         // از اول شروع کن
+    }
 }
