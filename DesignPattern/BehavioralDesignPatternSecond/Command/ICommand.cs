@@ -35,4 +35,30 @@ namespace DesignPattern.BehavioralDesignPatternSecond.Command
             Console.WriteLine("I am executing StopCommand");
         }
     }
+
+    public class Invoker
+    {
+        private readonly Dictionary<string, ICommand> _commands;
+
+        public Invoker()
+        {
+            _commands = new Dictionary<string, ICommand>
+            {
+                { "Start", new StartCommand() },
+                { "Stop", new StopCommand() }
+            };
+        }
+
+        public ICommand GetCommand(string action)
+        {
+            if (_commands.TryGetValue(action, out var command))
+            {
+                return command;
+            }
+
+            // Handle unknown command
+            return null;
+            // Or throw: throw new ArgumentException($"Unknown command: {action}");
+        }
+    }
 }
