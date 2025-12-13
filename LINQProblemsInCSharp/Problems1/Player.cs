@@ -141,6 +141,51 @@ namespace LINQProblemsInCSharp.Problems1
             new PlayerStatistic { Id = 10, PlayerId = 2, MatchId = 4, Goals = 1, Assists = 1,
                                  YellowCards = 0, RedCards = 0, MinutesPlayed = 90 }
         };
+
+            var topPlayers = playerStats
+            .GroupBy(ps => ps.PlayerId)
+            .Select(g => new
+            {
+                PlayerId = g.Key,
+                TotalGoals = g.Sum(ps => ps.Goals),
+                TotalAssists = g.Sum(ps => ps.Assists),
+                TotalPoints = g.Sum(ps => ps.Goals + ps.Assists),
+                MatchesPlayed = g.Select(ps => ps.MatchId).Distinct().Count(),
+                TotalMinutes = g.Sum(ps => ps.MinutesPlayed),
+                YellowCards = g.Sum(ps => ps.YellowCards),
+                RedCards = g.Sum(ps => ps.RedCards)
+            })
+            .Join(players,
+                  stats => stats.PlayerId,
+                  player => player.Id,
+                  (stats, player) => new
+                  {
+                      player.Name,
+                      player.Position,
+                      player.JerseyNumber,
+                      stats.TotalGoals,
+                      stats.TotalAssists,
+                      stats.TotalPoints,
+                      stats.MatchesPlayed,
+                      stats.TotalMinutes,
+                      stats.YellowCards,
+                      stats.RedCards,
+                      GoalsPerMatch = Math.Round((double)stats.TotalGoals / stats.MatchesPlayed, 2),
+                      PointsPerMatch = Math.Round((double)stats.TotalPoints / stats.MatchesPlayed, 2)
+                  })
+            .OrderByDescending(p => p.TotalPoints)
+            .Take(5)
+            .ToList();
+
+            Console.WriteLine("=== Top Players (Goals + Assists) ===");
+            foreach (var player in topPlayers)
+            {
+                Console.WriteLine($"{player.Name} (#{player.JerseyNumber}, {player.Position}):");
+                Console.WriteLine($"  Goals: {player.TotalGoals}, Assists: {player.TotalAssists}, Points: {player.TotalPoints}");
+                Console.WriteLine($"  Matches: {player.MatchesPlayed}, Minutes: {player.TotalMinutes}");
+                Console.WriteLine($"  Avg: {player.GoalsPerMatch} goals/match, {player.PointsPerMatch} points/match");
+            }
+
         }
     }
 }
