@@ -324,6 +324,43 @@ namespace LINQProblemsInCSharp.Problems1
                 }
             }
 
+            var teamDiscipline = playerStats
+                .Join(players,
+                    ps => ps.PlayerId,
+                    p => p.Id,
+                    (ps, p) => new { ps, p.TeamId })
+                .GroupBy(x => x.TeamId)
+                .Select(g => new
+                {
+                    TeamId = g.Key,
+                    YellowCards = g.Sum(x => x.ps.YellowCards),
+                    RedCards = g.Sum(x => x.ps.RedCards),
+                    PlayersWithCards = g.Select(x => x.ps.PlayerId).Distinct().Count()
+                })
+                .Join(teams,
+                    stats => stats.TeamId,
+                    team => team.Id,
+                    (stats, team) => new
+                    {
+                        team.Name,
+                        stats.YellowCards,
+                        stats.RedCards,
+                        stats.PlayersWithCards,
+                        CardsPerMatch = Math.Round((double)(stats.YellowCards + stats.RedCards) /
+                                                   matches.Count(m => m.Status == "Completed"), 2)
+                    })
+                .OrderByDescending(t => t.YellowCards + t.RedCards)
+                .ToList();
+
+            Console.WriteLine("\n=== Team Discipline ===");
+            foreach (var team in teamDiscipline)
+            {
+                Console.WriteLine($"{team.Name}:");
+                Console.WriteLine($"  Yellow Cards: {team.YellowCards}, Red Cards: {team.RedCards}");
+                Console.WriteLine($"  Players with cards: {team.PlayersWithCards}");
+                Console.WriteLine($"  Cards per match: {team.CardsPerMatch}");
+            }
+
 
         }
     }
