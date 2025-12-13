@@ -186,6 +186,63 @@ namespace LINQProblemsInCSharp.Problems1
                 Console.WriteLine($"  Avg: {player.GoalsPerMatch} goals/match, {player.PointsPerMatch} points/match");
             }
 
+            var teamStats = matches
+            .Where(m => m.Status == "Completed")
+            .SelectMany(m => new[]
+            {
+                new { TeamId = m.HomeTeamId, IsHome = true, GoalsFor = m.HomeTeamScore.Value,
+                      GoalsAgainst = m.AwayTeamScore.Value, Result = m.HomeTeamScore > m.AwayTeamScore ? "Win" :
+                      m.HomeTeamScore < m.AwayTeamScore ? "Loss" : "Draw" },
+                new { TeamId = m.AwayTeamId, IsHome = false, GoalsFor = m.AwayTeamScore.Value,
+                      GoalsAgainst = m.HomeTeamScore.Value, Result = m.AwayTeamScore > m.HomeTeamScore ? "Win" :
+                      m.AwayTeamScore < m.HomeTeamScore ? "Loss" : "Draw" }
+            })
+            .GroupBy(x => x.TeamId)
+            .Select(g => new
+            {
+                TeamId = g.Key,
+                MatchesPlayed = g.Count(),
+                Wins = g.Count(x => x.Result == "Win"),
+                Losses = g.Count(x => x.Result == "Loss"),
+                Draws = g.Count(x => x.Result == "Draw"),
+                GoalsFor = g.Sum(x => x.GoalsFor),
+                GoalsAgainst = g.Sum(x => x.GoalsAgainst),
+                GoalDifference = g.Sum(x => x.GoalsFor) - g.Sum(x => x.GoalsAgainst)
+            })
+            .Join(teams,
+                  stats => stats.TeamId,
+                  team => team.Id,
+                  (stats, team) => new
+                  {
+                      team.Name,
+                      team.Coach,
+                      stats.MatchesPlayed,
+                      stats.Wins,
+                      stats.Draws,
+                      stats.Losses,
+                      stats.GoalsFor,
+                      stats.GoalsAgainst,
+                      stats.GoalDifference,
+                      Points = stats.Wins * 3 + stats.Draws * 1
+                  })
+            .OrderByDescending(t => t.Points)
+            .ThenByDescending(t => t.GoalDifference)
+            .ThenByDescending(t => t.GoalsFor)
+            .ToList();
+
+            Console.WriteLine("\n=== Team Statistics ===");
+            Console.WriteLine("Pos | Team | MP | W | D | L | GF | GA | GD | Pts");
+            Console.WriteLine("----|------|----|---|---|---|----|----|----|----");
+
+            int position = 1;
+            foreach (var team in teamStats)
+            {
+                Console.WriteLine($"{position,3} | {team.Name,-10} | {team.MatchesPlayed,2} | {team.Wins,1} | " +
+                                $"{team.Draws,1} | {team.Losses,1} | {team.GoalsFor,2} | {team.GoalsAgainst,2} | " +
+                                $"{team.GoalDifference,2} | {team.Points,3}");
+                position++;
+            }
+
         }
     }
 }
