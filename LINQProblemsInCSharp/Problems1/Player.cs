@@ -243,6 +243,29 @@ namespace LINQProblemsInCSharp.Problems1
                 position++;
             }
 
+            var upcomingMatches = matches
+                .Where(m => m.Status == "Scheduled" && m.MatchDate > DateTime.Now)
+                .OrderBy(m => m.MatchDate)
+                .Select(m => new
+                {
+                    HomeTeam = teams.First(t => t.Id == m.HomeTeamId).Name,
+                    AwayTeam = teams.First(t => t.Id == m.AwayTeamId).Name,
+                    m.MatchDate,
+                    m.Stadium,
+                    DaysUntil = (m.MatchDate - DateTime.Now).Days
+                })
+                .ToList();
+
+            Console.WriteLine("\n=== Upcoming Matches ===");
+            foreach (var match in upcomingMatches)
+            {
+                Console.WriteLine($"{match.HomeTeam} vs {match.AwayTeam}");
+                Console.WriteLine($"  Date: {match.MatchDate:yyyy-MM-dd HH:mm}");
+                Console.WriteLine($"  Stadium: {match.Stadium}");
+                Console.WriteLine($"  In {match.DaysUntil} days");
+            }
+
+
         }
     }
 }
