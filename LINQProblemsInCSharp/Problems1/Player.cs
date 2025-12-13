@@ -286,6 +286,44 @@ namespace LINQProblemsInCSharp.Problems1
                 Console.WriteLine($"  In {performance.Match}");
             }
 
+            var playersByTeam = players
+                .GroupBy(p => p.TeamId)
+                .Select(g => new
+                {
+                    TeamId = g.Key,
+                    TeamName = teams.First(t => t.Id == g.Key).Name,
+                    Players = g.OrderBy(p => p.Position).ThenBy(p => p.JerseyNumber).ToList(),
+                    TotalSalary = g.Sum(p => p.Salary),
+                    AverageSalary = Math.Round(g.Average(p => p.Salary), 2)
+                })
+                .OrderBy(t => t.TeamName)
+                .ToList();
+
+            Console.WriteLine("\n=== Players by Team ===");
+            foreach (var team in playersByTeam)
+            {
+                Console.WriteLine($"\n{team.TeamName}:");
+                Console.WriteLine($"  Total Salary: ${team.TotalSalary}/month, Avg: ${team.AverageSalary}");
+
+                var positions = team.Players
+                    .GroupBy(p => p.Position)
+                    .Select(g => new
+                    {
+                        Position = g.Key,
+                        Count = g.Count()
+                    })
+                    .OrderBy(p => p.Position);
+
+                Console.Write("  Positions: ");
+                Console.WriteLine(string.Join(", ", positions.Select(p => $"{p.Position} ({p.Count})")));
+
+                Console.WriteLine("  Players:");
+                foreach (var player in team.Players)
+                {
+                    Console.WriteLine($"    #{player.JerseyNumber} {player.Name} ({player.Position})");
+                }
+            }
+
 
         }
     }
