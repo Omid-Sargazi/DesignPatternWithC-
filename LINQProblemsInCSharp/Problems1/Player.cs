@@ -264,6 +264,27 @@ namespace LINQProblemsInCSharp.Problems1
                 Console.WriteLine($"  Stadium: {match.Stadium}");
                 Console.WriteLine($"  In {match.DaysUntil} days");
             }
+            var bestPerformances = playerStats
+                .Where(ps => ps.Goals >= 2 || ps.Assists >= 2) // 2+ گل یا پاس گل
+                .OrderByDescending(ps => ps.Goals + ps.Assists)
+                .Select(ps => new
+                {
+                    Player = players.First(p => p.Id == ps.PlayerId).Name,
+                    Match = $"Match {ps.MatchId}",
+                    ps.Goals,
+                    ps.Assists,
+                    Points = ps.Goals + ps.Assists,
+                    Team = teams.First(t => t.Id == players.First(p => p.Id == ps.PlayerId).TeamId).Name
+                })
+                .ToList();
+
+            Console.WriteLine("\n=== Best Individual Performances ===");
+            foreach (var performance in bestPerformances)
+            {
+                Console.WriteLine($"{performance.Player} ({performance.Team}):");
+                Console.WriteLine($"  {performance.Goals} goals, {performance.Assists} assists = {performance.Points} points");
+                Console.WriteLine($"  In {performance.Match}");
+            }
 
 
         }
