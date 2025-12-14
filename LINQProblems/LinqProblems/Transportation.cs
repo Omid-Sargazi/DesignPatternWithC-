@@ -215,6 +215,32 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Odometer: {vehicle.Odometer}km, Next service at: {vehicle.NextServiceKm}km");
                 Console.WriteLine($"  Service Needed: {serviceNeeded}");
             }
+
+            var dailyRevenue = trips
+                .Where(t => t.Status == "Completed" && t.EndTime.HasValue)
+                .GroupBy(t => t.EndTime.Value.Date)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    TotalRevenue = g.Sum(t => t.Fare),
+                    TotalTrips = g.Count(),
+                    TotalDistance = g.Sum(t => t.Distance),
+                    TotalFuelCost = g.Sum(t => t.FuelCost),
+                    NetProfit = g.Sum(t => t.Fare - t.FuelCost),
+                    AvgTripRevenue = Math.Round(g.Average(t => t.Fare), 0)
+                })
+                .OrderByDescending(d => d.Date)
+                .Take(7)
+                .ToList();
+
+            Console.WriteLine("\n=== Daily Revenue (Last 7 Days) ===");
+            foreach (var day in dailyRevenue)
+            {
+                Console.WriteLine($"{day.Date:yyyy-MM-dd}:");
+                Console.WriteLine($"  Revenue: {day.TotalRevenue:C0}, Trips: {day.TotalTrips}");
+                Console.WriteLine($"  Distance: {day.TotalDistance}km, Fuel Cost: {day.TotalFuelCost:C0}");
+                Console.WriteLine($"  Net Profit: {day.NetProfit:C0}, Avg/Trip: {day.AvgTripRevenue:C0}");
+            }
         }
     }
 
