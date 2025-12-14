@@ -307,6 +307,42 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Utilization: {vehicle.UtilizationRate}%, Revenue/Km: {vehicle.RevenuePerKm:C0}");
             }
 
+            var maintenanceCosts = maintenances
+                .GroupBy(m => m.VehicleId)
+                .Select(g => new
+                {
+                    VehicleId = g.Key,
+                    TotalCost = g.Sum(m => m.Cost),
+                    ServiceCount = g.Count(),
+                    LastService = g.Max(m => m.ServiceDate),
+                    EmergencyServices = g.Count(m => m.ServiceType == "Emergency")
+                })
+                .Join(vehicles,
+                    cost => cost.VehicleId,
+                    vehicle => vehicle.Id,
+                    (cost, vehicle) => new
+                    {
+                        vehicle.LicensePlate,
+                        cost.TotalCost,
+                        cost.ServiceCount,
+                        cost.LastService,
+                        cost.EmergencyServices,
+                        CostPerKm = Math.Round(cost.TotalCost / vehicle.Odometer, 0),
+                        AvgServiceCost = Math.Round(cost.TotalCost / cost.ServiceCount, 0)
+                    })
+                .OrderByDescending(m => m.TotalCost)
+                .ToList();
+
+            Console.WriteLine("\n=== Maintenance Costs ===");
+            foreach (var maintenance in maintenanceCosts)
+            {
+                Console.WriteLine($"{maintenance.LicensePlate}:");
+                Console.WriteLine($"  Total Cost: {maintenance.TotalCost:C0}, Services: {maintenance.ServiceCount}");
+                Console.WriteLine($"  Last Service: {maintenance.LastService:yyyy-MM-dd}");
+                Console.WriteLine($"  Emergency Services: {maintenance.EmergencyServices}");
+                Console.WriteLine($"  Cost/Km: {maintenance.CostPerKm:C0}, Avg/Service: {maintenance.AvgServiceCost:C0}");
+            }
+
         }
     }
 
