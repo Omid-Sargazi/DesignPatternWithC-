@@ -139,6 +139,47 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Distance: {trip.Distance}km, Duration: {trip.Duration:F1}h");
                 Console.WriteLine($"  Fare: {trip.Fare:C0}");
             }
+
+            var driverPerformance = trips
+                .Where(t => t.Status == "Completed")
+                .GroupBy(t => t.DriverId)
+                .Select(g => new
+                {
+                    DriverId = g.Key,
+                    TotalTrips = g.Count(),
+                    TotalDistance = g.Sum(t => t.Distance),
+                    TotalRevenue = g.Sum(t => t.Fare),
+                    TotalFuelCost = g.Sum(t => t.FuelCost),
+                    AverageTripDistance = Math.Round(g.Average(t => t.Distance), 1)
+                })
+                .Join(drivers,
+                    stats => stats.DriverId,
+                    driver => driver.Id,
+                    (stats, driver) => new
+                    {
+                        driver.Name,
+                        driver.LicenseType,
+                        Experience = (DateTime.Now - driver.HireDate).Days / 365,
+                        stats.TotalTrips,
+                        stats.TotalDistance,
+                        stats.TotalRevenue,
+                        stats.TotalFuelCost,
+                        stats.AverageTripDistance,
+                        Profit = stats.TotalRevenue - stats.TotalFuelCost,
+                        Efficiency = Math.Round((double)stats.TotalDistance / stats.TotalTrips, 1)
+                    })
+                .OrderByDescending(d => d.Profit)
+                .ToList();
+
+            Console.WriteLine("\n=== Driver Performance ===");
+            foreach (var driver in driverPerformance)
+            {
+                Console.WriteLine($"{driver.Name} (License: {driver.LicenseType}, Exp: {driver.Experience} years):");
+                Console.WriteLine($"  Trips: {driver.TotalTrips}, Distance: {driver.TotalDistance}km");
+                Console.WriteLine($"  Revenue: {driver.TotalRevenue:C0}, Fuel Cost: {driver.TotalFuelCost:C0}");
+                Console.WriteLine($"  Profit: {driver.Profit:C0}, Avg Distance: {driver.AverageTripDistance}km");
+                Console.WriteLine($"  Efficiency: {driver.Efficiency} km/trip");
+            }
         }
     }
 
