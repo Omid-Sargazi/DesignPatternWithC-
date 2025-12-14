@@ -270,6 +270,43 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Profit per KM: {route.ProfitPerKm:C0}");
             }
 
+            var vehicleUtilization = trips
+                .Where(t => t.Status == "Completed" && t.EndTime.HasValue)
+                .GroupBy(t => t.VehicleId)
+                .Select(g => new
+                {
+                    VehicleId = g.Key,
+                    TotalTrips = g.Count(),
+                    TotalDistance = g.Sum(t => t.Distance),
+                    TotalHours = g.Sum(t => (t.EndTime.Value - t.StartTime).TotalHours),
+                    TotalRevenue = g.Sum(t => t.Fare)
+                })
+                .Join(vehicles,
+                    stats => stats.VehicleId,
+                    vehicle => vehicle.Id,
+                    (stats, vehicle) => new
+                    {
+                        vehicle.LicensePlate,
+                        vehicle.Type,
+                        stats.TotalTrips,
+                        stats.TotalDistance,
+                        stats.TotalHours,
+                        stats.TotalRevenue,
+                        UtilizationRate = Math.Round(stats.TotalHours / (DateTime.Now - vehicle.LastServiceDate).TotalHours * 100, 1),
+                        RevenuePerKm = Math.Round(stats.TotalRevenue / stats.TotalDistance, 0)
+                    })
+                .OrderByDescending(v => v.UtilizationRate)
+                .ToList();
+
+            Console.WriteLine("\n=== Vehicle Utilization ===");
+            foreach (var vehicle in vehicleUtilization)
+            {
+                Console.WriteLine($"{vehicle.LicensePlate} ({vehicle.Type}):");
+                Console.WriteLine($"  Trips: {vehicle.TotalTrips}, Distance: {vehicle.TotalDistance}km");
+                Console.WriteLine($"  Hours: {vehicle.TotalHours:F1}h, Revenue: {vehicle.TotalRevenue:C0}");
+                Console.WriteLine($"  Utilization: {vehicle.UtilizationRate}%, Revenue/Km: {vehicle.RevenuePerKm:C0}");
+            }
+
         }
     }
 
