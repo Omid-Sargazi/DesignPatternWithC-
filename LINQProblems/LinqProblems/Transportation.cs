@@ -114,6 +114,31 @@ namespace LINQProblems.LinqProblems
             new Maintenance { Id = 4, VehicleId = 4, ServiceDate = DateTime.Now.AddDays(-15),
                             ServiceType = "Regular", Cost = 1500000, Description = "Tire replacement", NextServiceKm = 10000 }
         };
+
+            var activeTrips = trips
+                .Where(t => t.Status == "InProgress")
+                .Select(t => new
+                {
+                    t.Id,
+                    Vehicle = vehicles.First(v => v.Id == t.VehicleId).LicensePlate,
+                    Driver = drivers.First(d => d.Id == t.DriverId).Name,
+                    Route = $"{t.StartLocation} → {t.EndLocation}",
+                    t.Distance,
+                    Duration = t.EndTime.HasValue ?
+                        (t.EndTime.Value - t.StartTime).TotalHours :
+                        (DateTime.Now - t.StartTime).TotalHours,
+                    t.Fare
+                })
+                .ToList();
+
+            Console.WriteLine("=== Active Trips ===");
+            foreach (var trip in activeTrips)
+            {
+                Console.WriteLine($"Trip #{trip.Id}: {trip.Route}");
+                Console.WriteLine($"  Vehicle: {trip.Vehicle}, Driver: {trip.Driver}");
+                Console.WriteLine($"  Distance: {trip.Distance}km, Duration: {trip.Duration:F1}h");
+                Console.WriteLine($"  Fare: {trip.Fare:C0}");
+            }
         }
     }
 
