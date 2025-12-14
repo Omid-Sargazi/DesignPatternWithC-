@@ -180,6 +180,41 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Profit: {driver.Profit:C0}, Avg Distance: {driver.AverageTripDistance}km");
                 Console.WriteLine($"  Efficiency: {driver.Efficiency} km/trip");
             }
+
+            var vehiclesNeedingService = vehicles
+                .Select(v => new
+                {
+                    v.LicensePlate,
+                    v.Type,
+                    LastService = v.LastServiceDate,
+                    DaysSinceService = (DateTime.Now - v.LastServiceDate).Days,
+                    v.Odometer,
+                    NextServiceKm = maintenances
+                        .Where(m => m.VehicleId == v.Id)
+                        .OrderByDescending(m => m.ServiceDate)
+                        .FirstOrDefault()?.NextServiceKm ?? 5000,
+                    KmSinceLastService = v.Odometer - (maintenances
+                        .Where(m => m.VehicleId == v.Id && m.ServiceDate <= v.LastServiceDate)
+                        .OrderByDescending(m => m.ServiceDate)
+                        .FirstOrDefault()?.NextServiceKm ?? (v.Odometer - 5000))
+                })
+                .Where(v => v.DaysSinceService > 30 || v.KmSinceLastService > 5000)
+                .OrderByDescending(v => v.DaysSinceService)
+                .ToList();
+
+            Console.WriteLine("\n=== Vehicles Needing Service ===");
+            foreach (var vehicle in vehiclesNeedingService)
+            {
+                string serviceNeeded = "";
+                if (vehicle.DaysSinceService > 30) serviceNeeded += $"Days: {vehicle.DaysSinceService} > 30";
+                if (vehicle.KmSinceLastService > 5000)
+                    serviceNeeded += $"{(serviceNeeded.Length > 0 ? ", " : "")}KM: {vehicle.KmSinceLastService} > 5000";
+
+                Console.WriteLine($"{vehicle.LicensePlate} ({vehicle.Type}):");
+                Console.WriteLine($"  Last Service: {vehicle.LastService:yyyy-MM-dd} ({vehicle.DaysSinceService} days ago)");
+                Console.WriteLine($"  Odometer: {vehicle.Odometer}km, Next service at: {vehicle.NextServiceKm}km");
+                Console.WriteLine($"  Service Needed: {serviceNeeded}");
+            }
         }
     }
 
