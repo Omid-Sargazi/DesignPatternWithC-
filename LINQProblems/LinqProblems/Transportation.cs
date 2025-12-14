@@ -54,4 +54,67 @@ namespace LINQProblems.LinqProblems
         public int NextServiceKm { get; set; }
     }
 
+    public class Transportation
+    {
+        public static void Execute()
+        {
+            var vehicles = new List<Vehicle>
+        {
+            new Vehicle { Id = 1, LicensePlate = "12ب12345", Type = "Car", Capacity = 4,
+                         FuelEfficiency = 12, LastServiceDate = DateTime.Now.AddDays(-30),
+                         Odometer = 50000, IsAvailable = true },
+            new Vehicle { Id = 2, LicensePlate = "22ب12346", Type = "Van", Capacity = 8,
+                         FuelEfficiency = 8, LastServiceDate = DateTime.Now.AddDays(-60),
+                         Odometer = 75000, IsAvailable = true },
+            new Vehicle { Id = 3, LicensePlate = "32ب12347", Type = "Truck", Capacity = 2,
+                         FuelEfficiency = 5, LastServiceDate = DateTime.Now.AddDays(-90),
+                         Odometer = 120000, IsAvailable = false },
+            new Vehicle { Id = 4, LicensePlate = "42ب12348", Type = "Bus", Capacity = 40,
+                         FuelEfficiency = 4, LastServiceDate = DateTime.Now.AddDays(-15),
+                         Odometer = 200000, IsAvailable = true }
+        };
+
+            var drivers = new List<Driver>
+        {
+            new Driver { Id = 1, Name = "Ali Rezaei", LicenseNumber = "L123456",
+                        LicenseType = "B", HireDate = DateTime.Now.AddYears(-3), HourlyRate = 25 },
+            new Driver { Id = 2, Name = "Mohammad Karimi", LicenseNumber = "L234567",
+                        LicenseType = "C", HireDate = DateTime.Now.AddYears(-1), HourlyRate = 30 },
+            new Driver { Id = 3, Name = "Hassan Ahmadi", LicenseNumber = "L345678",
+                        LicenseType = "D", HireDate = DateTime.Now.AddYears(-5), HourlyRate = 35 }
+        };
+
+            var trips = new List<Trip>
+        {
+            new Trip { Id = 1, VehicleId = 1, DriverId = 1, StartLocation = "Tehran",
+                      EndLocation = "Karaj", Distance = 40, StartTime = DateTime.Now.AddHours(-5),
+                      EndTime = DateTime.Now.AddHours(-4), Status = "Completed", Fare = 250000, FuelCost = 50000 },
+            new Trip { Id = 2, VehicleId = 2, DriverId = 2, StartLocation = "Tehran",
+                      EndLocation = "Qom", Distance = 140, StartTime = DateTime.Now.AddHours(-3),
+                      EndTime = null, Status = "InProgress", Fare = 800000, FuelCost = 140000 },
+            new Trip { Id = 3, VehicleId = 4, DriverId = 3, StartLocation = "Tehran",
+                      EndLocation = "Isfahan", Distance = 450, StartTime = DateTime.Now.AddDays(-1),
+                      EndTime = DateTime.Now.AddDays(-1).AddHours(6), Status = "Completed", Fare = 2500000, FuelCost = 450000 },
+            new Trip { Id = 4, VehicleId = 1, DriverId = 1, StartLocation = "Tehran",
+                      EndLocation = "Shiraz", Distance = 950, StartTime = DateTime.Now.AddDays(1),
+                      EndTime = null, Status = "Scheduled", Fare = 5000000, FuelCost = 950000 },
+            new Trip { Id = 5, VehicleId = 3, DriverId = 2, StartLocation = "Tehran",
+                      EndLocation = "Mashhad", Distance = 900, StartTime = DateTime.Now.AddDays(-2),
+                      EndTime = DateTime.Now.AddDays(-1), Status = "Completed", Fare = 4500000, FuelCost = 900000 }
+        };
+
+            var maintenances = new List<Maintenance>
+        {
+            new Maintenance { Id = 1, VehicleId = 1, ServiceDate = DateTime.Now.AddDays(-30),
+                            ServiceType = "Regular", Cost = 500000, Description = "Oil change and filter", NextServiceKm = 1000 },
+            new Maintenance { Id = 2, VehicleId = 2, ServiceDate = DateTime.Now.AddDays(-60),
+                            ServiceType = "Regular", Cost = 800000, Description = "Brake pads replacement", NextServiceKm = 5000 },
+            new Maintenance { Id = 3, VehicleId = 3, ServiceDate = DateTime.Now.AddDays(-90),
+                            ServiceType = "Emergency", Cost = 2000000, Description = "Engine repair", NextServiceKm = 3000 },
+            new Maintenance { Id = 4, VehicleId = 4, ServiceDate = DateTime.Now.AddDays(-15),
+                            ServiceType = "Regular", Cost = 1500000, Description = "Tire replacement", NextServiceKm = 10000 }
+        };
+        }
+    }
+
 }
