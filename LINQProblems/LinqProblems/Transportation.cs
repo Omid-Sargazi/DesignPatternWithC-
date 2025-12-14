@@ -241,6 +241,35 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Distance: {day.TotalDistance}km, Fuel Cost: {day.TotalFuelCost:C0}");
                 Console.WriteLine($"  Net Profit: {day.NetProfit:C0}, Avg/Trip: {day.AvgTripRevenue:C0}");
             }
+
+            var profitableRoutes = trips
+                .Where(t => t.Status == "Completed")
+                .GroupBy(t => new { t.StartLocation, t.EndLocation })
+                .Select(g => new
+                {
+                    Route = $"{g.Key.StartLocation} → {g.Key.EndLocation}",
+                    TotalTrips = g.Count(),
+                    TotalDistance = g.Sum(t => t.Distance),
+                    TotalRevenue = g.Sum(t => t.Fare),
+                    TotalFuelCost = g.Sum(t => t.FuelCost),
+                    AvgDistance = Math.Round(g.Average(t => t.Distance), 1),
+                    AvgRevenue = Math.Round(g.Average(t => t.Fare), 0),
+                    ProfitPerKm = Math.Round(g.Sum(t => t.Fare - t.FuelCost) / g.Sum(t => t.Distance), 0)
+                })
+                .OrderByDescending(r => r.ProfitPerKm)
+                .Take(5)
+                .ToList();
+
+            Console.WriteLine("\n=== Most Profitable Routes ===");
+            foreach (var route in profitableRoutes)
+            {
+                Console.WriteLine($"{route.Route}:");
+                Console.WriteLine($"  Trips: {route.TotalTrips}, Distance: {route.TotalDistance}km");
+                Console.WriteLine($"  Revenue: {route.TotalRevenue:C0}, Fuel Cost: {route.TotalFuelCost:C0}");
+                Console.WriteLine($"  Avg Distance: {route.AvgDistance}km, Avg Revenue: {route.AvgRevenue:C0}");
+                Console.WriteLine($"  Profit per KM: {route.ProfitPerKm:C0}");
+            }
+
         }
     }
 
