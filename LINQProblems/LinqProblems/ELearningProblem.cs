@@ -342,6 +342,30 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Pending: {assignment.NotSubmitted} students");
             }
 
+            var systemStats = new
+            {
+                TotalStudents = students.Count,
+                TotalInstructors = instructors.Count,
+                TotalCourses = courses.Count,
+                ActiveCourses = courses.Count(c => c.EndDate > DateTime.Now),
+                TotalEnrollments = enrollments.Count,
+                ActiveEnrollments = enrollments.Count(e => e.Status == "Active"),
+                CompletionRate = Math.Round((double)enrollments.Count(e => e.Status == "Completed") /
+                    enrollments.Count * 100, 1),
+                TotalRevenue = enrollments.Sum(e => courses.First(c => c.Id == e.CourseId).Price),
+                AverageCoursePrice = Math.Round(courses.Average(c => c.Price), 0)
+            };
+
+            Console.WriteLine("\n=== E-Learning System Statistics ===");
+            Console.WriteLine($"Students: {systemStats.TotalStudents}");
+            Console.WriteLine($"Instructors: {systemStats.TotalInstructors}");
+            Console.WriteLine($"Courses: {systemStats.TotalCourses} ({systemStats.ActiveCourses} active)");
+            Console.WriteLine($"Enrollments: {systemStats.TotalEnrollments} ({systemStats.ActiveEnrollments} active)");
+            Console.WriteLine($"Completion Rate: {systemStats.CompletionRate}%");
+            Console.WriteLine($"Total Revenue: {systemStats.TotalRevenue:C0}");
+            Console.WriteLine($"Average Course Price: {systemStats.AverageCoursePrice:C0}");
+
+
         }
 
     }
