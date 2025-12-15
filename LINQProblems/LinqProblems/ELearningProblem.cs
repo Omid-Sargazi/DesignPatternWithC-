@@ -173,6 +173,44 @@ namespace LINQProblems.LinqProblems
             new Submission { Id = 10, AssignmentId = 6, StudentId = 3, SubmissionDate = DateTime.Now.AddDays(-41),
                            Score = 24, IsLate = false }
         };
+
+            var popularCourses = enrollments
+                .GroupBy(e => e.CourseId)
+                .Select(g => new
+                {
+                    CourseId = g.Key,
+                    TotalEnrollments = g.Count(),
+                    ActiveEnrollments = g.Count(e => e.Status == "Active"),
+                    CompletionRate = Math.Round((double)g.Count(e => e.Status == "Completed") / g.Count() * 100, 1),
+                    DropoutRate = Math.Round((double)g.Count(e => e.Status == "Dropped") / g.Count() * 100, 1)
+                })
+                .Join(courses,
+                    stats => stats.CourseId,
+                    course => course.Id,
+                    (stats, course) => new
+                    {
+                        course.Title,
+                        course.Category,
+                        course.Price,
+                        course.Duration,
+                        stats.TotalEnrollments,
+                        stats.ActiveEnrollments,
+                        stats.CompletionRate,
+                        stats.DropoutRate,
+                        EnrollmentRate = Math.Round((double)stats.ActiveEnrollments / course.MaxStudents * 100, 1)
+                    })
+                .OrderByDescending(c => c.TotalEnrollments)
+                .ToList();
+
+            Console.WriteLine("=== Popular Courses ===");
+            foreach (var course in popularCourses)
+            {
+                Console.WriteLine($"{course.Title} ({course.Category}):");
+                Console.WriteLine($"  Enrollments: {course.TotalEnrollments} total, {course.ActiveEnrollments} active");
+                Console.WriteLine($"  Rate: {course.EnrollmentRate}% of capacity");
+                Console.WriteLine($"  Completion: {course.CompletionRate}%, Dropout: {course.DropoutRate}%");
+                Console.WriteLine($"  Price: {course.Price:C0}, Duration: {course.Duration}h");
+            }
         }
     }
 }
