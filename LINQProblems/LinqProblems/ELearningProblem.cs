@@ -366,6 +366,30 @@ namespace LINQProblems.LinqProblems
             Console.WriteLine($"Average Course Price: {systemStats.AverageCoursePrice:C0}");
 
 
+            var categoryAnalysis = courses
+                .GroupBy(c => c.Category)
+                .Select(g => new
+                {
+                    Category = g.Key,
+                    CourseCount = g.Count(),
+                    AveragePrice = Math.Round(g.Average(c => c.Price), 0),
+                    AverageDuration = Math.Round(g.Average(c => c.Duration), 1),
+                    TotalStudents = enrollments.Count(e => g.Any(c => c.Id == e.CourseId)),
+                    Popularity = Math.Round((double)enrollments.Count(e => g.Any(c => c.Id == e.CourseId)) /
+                        enrollments.Count * 100, 1)
+                })
+                .OrderByDescending(c => c.Popularity)
+                .ToList();
+
+            Console.WriteLine("\n=== Course Category Analysis ===");
+            foreach (var category in categoryAnalysis)
+            {
+                Console.WriteLine($"{category.Category}:");
+                Console.WriteLine($"  Courses: {category.CourseCount}");
+                Console.WriteLine($"  Avg Price: {category.AveragePrice:C0}, Avg Duration: {category.AverageDuration}h");
+                Console.WriteLine($"  Students: {category.TotalStudents}, Popularity: {category.Popularity}%");
+            }
+
         }
 
     }
