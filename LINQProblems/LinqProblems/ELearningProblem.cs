@@ -291,6 +291,32 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Students: {instructor.TotalStudents}, Revenue: {instructor.TotalRevenue:C0}");
                 Console.WriteLine($"  Student Satisfaction: {instructor.StudentSatisfaction}%");
             }
+
+            var overdueAssignments = assignments
+                .Where(a => a.DueDate < DateTime.Now)
+                .Select(a => new
+                {
+                    a.Title,
+                    Course = courses.First(c => c.Id == a.CourseId).Title,
+                    a.DueDate,
+                    DaysOverdue = (DateTime.Now - a.DueDate).Days,
+                    TotalStudents = enrollments.Count(e => e.CourseId == a.CourseId && e.Status == "Active"),
+                    SubmissionsCount = submissions.Count(s => s.AssignmentId == a.Id),
+                    SubmissionRate = Math.Round((double)submissions.Count(s => s.AssignmentId == a.Id) /
+                        enrollments.Count(e => e.CourseId == a.CourseId && e.Status == "Active") * 100, 1)
+                })
+                .OrderByDescending(a => a.DaysOverdue)
+                .ToList();
+
+            Console.WriteLine("\n=== Overdue Assignments ===");
+            foreach (var assignment in overdueAssignments)
+            {
+                Console.WriteLine($"{assignment.Title} ({assignment.Course}):");
+                Console.WriteLine($"  Due: {assignment.DueDate:yyyy-MM-dd} ({assignment.DaysOverdue} days overdue)");
+                Console.WriteLine($"  Students: {assignment.TotalStudents}, Submitted: {assignment.SubmissionsCount}");
+                Console.WriteLine($"  Submission Rate: {assignment.SubmissionRate}%");
+            }
+
         }
 
     }
