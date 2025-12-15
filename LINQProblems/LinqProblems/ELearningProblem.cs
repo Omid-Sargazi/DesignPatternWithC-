@@ -250,6 +250,47 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Assignments: {student.AssignmentsSubmitted} submitted, Avg Score: {student.AverageScore:F1}");
                 Console.WriteLine($"  Late Submissions: {student.LateSubmissions}");
             }
+
+            var instructorPerformance = instructors
+            .Select(instructor => new
+            {
+                instructor.Name,
+                instructor.Expertise,
+                instructor.Rating,
+                instructor.HireDate,
+                Courses = courses.Where(c => c.InstructorId == instructor.Id).ToList()
+            })
+            .Select(data => new
+            {
+                data.Name,
+                data.Expertise,
+                data.Rating,
+                Experience = (DateTime.Now - data.HireDate).Days / 365,
+                TotalCourses = data.Courses.Count,
+                ActiveCourses = data.Courses.Count(c => c.EndDate > DateTime.Now),
+                TotalStudents = enrollments
+                    .Where(e => data.Courses.Any(c => c.Id == e.CourseId))
+                    .Select(e => e.StudentId)
+                    .Distinct()
+                    .Count(),
+                TotalRevenue = data.Courses
+                    .Sum(c => enrollments.Count(e => e.CourseId == c.Id) * c.Price),
+                StudentSatisfaction = Math.Round(enrollments
+                    .Where(e => data.Courses.Any(c => c.Id == e.CourseId) && e.FinalGrade.HasValue)
+                    .Average(e => e.FinalGrade.Value) / 20 * 100, 1) // Convert to percentage
+            })
+            .OrderByDescending(i => i.TotalRevenue)
+            .ToList();
+
+            Console.WriteLine("\n=== Instructor Performance ===");
+            foreach (var instructor in instructorPerformance)
+            {
+                Console.WriteLine($"{instructor.Name} ({instructor.Expertise}):");
+                Console.WriteLine($"  Rating: {instructor.Rating}/5, Experience: {instructor.Experience} years");
+                Console.WriteLine($"  Courses: {instructor.TotalCourses} total, {instructor.ActiveCourses} active");
+                Console.WriteLine($"  Students: {instructor.TotalStudents}, Revenue: {instructor.TotalRevenue:C0}");
+                Console.WriteLine($"  Student Satisfaction: {instructor.StudentSatisfaction}%");
+            }
         }
 
     }
