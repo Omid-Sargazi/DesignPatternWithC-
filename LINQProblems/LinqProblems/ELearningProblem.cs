@@ -317,6 +317,31 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Submission Rate: {assignment.SubmissionRate}%");
             }
 
+            var pendingAssignments = assignments
+                .Where(a => a.DueDate > DateTime.Now)
+                .Select(a => new
+                {
+                    a.Title,
+                    Course = courses.First(c => c.Id == a.CourseId).Title,
+                    a.DueDate,
+                    DaysLeft = (a.DueDate - DateTime.Now).Days,
+                    TotalStudents = enrollments.Count(e => e.CourseId == a.CourseId && e.Status == "Active"),
+                    Submitted = submissions.Count(s => s.AssignmentId == a.Id),
+                    NotSubmitted = enrollments.Count(e => e.CourseId == a.CourseId && e.Status == "Active") -
+                                   submissions.Count(s => s.AssignmentId == a.Id)
+                })
+                .OrderBy(a => a.DaysLeft)
+                .ToList();
+
+            Console.WriteLine("\n=== Pending Assignments ===");
+            foreach (var assignment in pendingAssignments)
+            {
+                Console.WriteLine($"{assignment.Title} ({assignment.Course}):");
+                Console.WriteLine($"  Due: {assignment.DueDate:yyyy-MM-dd} (in {assignment.DaysLeft} days)");
+                Console.WriteLine($"  Status: {assignment.Submitted}/{assignment.TotalStudents} submitted");
+                Console.WriteLine($"  Pending: {assignment.NotSubmitted} students");
+            }
+
         }
 
     }
