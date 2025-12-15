@@ -211,6 +211,46 @@ namespace LINQProblems.LinqProblems
                 Console.WriteLine($"  Completion: {course.CompletionRate}%, Dropout: {course.DropoutRate}%");
                 Console.WriteLine($"  Price: {course.Price:C0}, Duration: {course.Duration}h");
             }
+
+            var studentProgress = students
+           .Select(student => new
+           {
+               student.Name,
+               student.Level,
+               student.JoinDate,
+               Enrollments = enrollments.Where(e => e.StudentId == student.Id).ToList(),
+               Submissions = submissions.Where(s => s.StudentId == student.Id).ToList()
+           })
+           .Select(data => new
+           {
+               data.Name,
+               data.Level,
+               MonthsAsStudent = (DateTime.Now - data.JoinDate).Days / 30,
+               TotalCourses = data.Enrollments.Count,
+               CompletedCourses = data.Enrollments.Count(e => e.Status == "Completed"),
+               ActiveCourses = data.Enrollments.Count(e => e.Status == "Active"),
+               AverageGrade = data.Enrollments
+                   .Where(e => e.FinalGrade.HasValue)
+                   .Average(e => e.FinalGrade.Value),
+               AssignmentsSubmitted = data.Submissions.Count,
+               AverageScore = data.Submissions
+                   .Where(s => s.Score.HasValue)
+                   .Average(s => s.Score.Value),
+               LateSubmissions = data.Submissions.Count(s => s.IsLate)
+           })
+           .OrderByDescending(s => s.AverageGrade)
+           .ToList();
+
+            Console.WriteLine("\n=== Student Progress ===");
+            foreach (var student in studentProgress)
+            {
+                Console.WriteLine($"{student.Name} ({student.Level}):");
+                Console.WriteLine($"  Courses: {student.TotalCourses} total, {student.CompletedCourses} completed, {student.ActiveCourses} active");
+                Console.WriteLine($"  Avg Grade: {(student.AverageGrade > 0 ? student.AverageGrade.ToString("F1") : "N/A")}");
+                Console.WriteLine($"  Assignments: {student.AssignmentsSubmitted} submitted, Avg Score: {student.AverageScore:F1}");
+                Console.WriteLine($"  Late Submissions: {student.LateSubmissions}");
+            }
         }
+
     }
 }
