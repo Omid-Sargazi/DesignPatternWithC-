@@ -230,6 +230,47 @@ namespace LINQExamples.LinqProblems2
                 Console.Write("  Items: ");
                 Console.WriteLine(string.Join(", ", order.Items.Select(i => $"{i.Item} x{i.Quantity}")));
             }
+
+            var serviceTimes = orders
+                .Where(o => o.ServeTime.HasValue)
+                .Select(o => new
+                {
+                    OrderId = o.Id,
+                    ServiceTime = (o.ServeTime.Value - o.OrderTime).TotalMinutes
+                })
+                .ToList();
+
+            if (serviceTimes.Any())
+            {
+                var avgServiceTime = Math.Round(serviceTimes.Average(st => st.ServiceTime), 1);
+                var minServiceTime = Math.Round(serviceTimes.Min(st => st.ServiceTime), 1);
+                var maxServiceTime = Math.Round(serviceTimes.Max(st => st.ServiceTime), 1);
+
+                Console.WriteLine("\n=== Service Time Analysis ===");
+                Console.WriteLine($"Average Service Time: {avgServiceTime} minutes");
+                Console.WriteLine($"Fastest Service: {minServiceTime} minutes");
+                Console.WriteLine($"Slowest Service: {maxServiceTime} minutes");
+
+                var serviceTimeDistribution = serviceTimes
+                    .GroupBy(st =>
+                        st.ServiceTime <= 15 ? "Fast (≤15min)" :
+                        st.ServiceTime <= 30 ? "Normal (16-30min)" :
+                        st.ServiceTime <= 45 ? "Slow (31-45min)" : "Very Slow (>45min)")
+                    .Select(g => new
+                    {
+                        Category = g.Key,
+                        Count = g.Count(),
+                        Percentage = Math.Round((double)g.Count() / serviceTimes.Count * 100, 1)
+                    })
+                    .OrderByDescending(g => g.Count)
+                    .ToList();
+
+                Console.WriteLine("\nService Time Distribution:");
+                foreach (var dist in serviceTimeDistribution)
+                {
+                    Console.WriteLine($"  {dist.Category}: {dist.Count} orders ({dist.Percentage}%)");
+                }
+            }
         }
 
     }
