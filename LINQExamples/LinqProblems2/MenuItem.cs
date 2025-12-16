@@ -319,6 +319,25 @@ namespace LINQExamples.LinqProblems2
                     Console.WriteLine($"  Average Guests: {status.AverageGuests}");
                 }
 
+                var restaurantStats = new
+                {
+                    TotalMenuItems = menuItems.Count,
+                    AvailableMenuItems = menuItems.Count(m => m.IsAvailable),
+                    TotalTables = tables.Count,
+                    OccupiedTables = tables.Count(t => t.IsOccupied),
+                    OccupancyRate = Math.Round((double)tables.Count(t => t.IsOccupied) / tables.Count * 100, 1),
+                    TodayRevenue = orders.Where(o => o.OrderTime.Date == DateTime.Today && o.Status == "Paid")
+                        .Sum(o => o.TotalAmount),
+                    AverageOrderValue = orders.Average(o => o.TotalAmount)
+                };
+
+                Console.WriteLine("\n=== Restaurant Statistics ===");
+                Console.WriteLine($"Menu Items: {restaurantStats.TotalMenuItems} ({restaurantStats.AvailableMenuItems} available)");
+                Console.WriteLine($"Tables: {restaurantStats.TotalTables} ({restaurantStats.OccupiedTables} occupied)");
+                Console.WriteLine($"Occupancy Rate: {restaurantStats.OccupancyRate}%");
+                Console.WriteLine($"Today's Revenue: {restaurantStats.TodayRevenue:C0}");
+                Console.WriteLine($"Average Order Value: {restaurantStats.AverageOrderValue:C0}");
+
             }
         }
 
