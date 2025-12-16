@@ -133,6 +133,42 @@ namespace LINQExamples.LinqProblems2
             new OrderItem { Id = 11, OrderId = 4, MenuItemId = 5, Quantity = 1, SpecialInstructions = "No mushrooms" },
             new OrderItem { Id = 12, OrderId = 4, MenuItemId = 9, Quantity = 2, SpecialInstructions = "" }
         };
+
+
+
+            var popularItems = orderItems
+                .GroupBy(oi => oi.MenuItemId)
+                .Select(g => new
+                {
+                    MenuItemId = g.Key,
+                    TotalQuantity = g.Sum(oi => oi.Quantity),
+                    TotalRevenue = g.Sum(oi => oi.Quantity * menuItems.First(m => m.Id == g.Key).Price),
+                    OrderCount = g.Select(oi => oi.OrderId).Distinct().Count()
+                })
+                .Join(menuItems,
+                    stats => stats.MenuItemId,
+                    item => item.Id,
+                    (stats, item) => new
+                    {
+                        item.Name,
+                        item.Category,
+                        item.Price,
+                        stats.TotalQuantity,
+                        stats.TotalRevenue,
+                        stats.OrderCount,
+                    })
+                .OrderByDescending(item => item.TotalQuantity)
+                .Take(5)
+                .ToList();
+
+            Console.WriteLine("=== Most Popular Menu Items ===");
+            foreach (var item in popularItems)
+            {
+                Console.WriteLine($"{item.Name} ({item.Category}):");
+                Console.WriteLine($"  Price: {item.Price:C0}, Sold: {item.TotalQuantity} times");
+                Console.WriteLine($"  Orders: {item.OrderCount}, Revenue: {item.TotalRevenue:C0}");
+               
+            }
         }
 
     }
