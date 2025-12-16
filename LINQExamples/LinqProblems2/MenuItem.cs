@@ -270,6 +270,34 @@ namespace LINQExamples.LinqProblems2
                 {
                     Console.WriteLine($"  {dist.Category}: {dist.Count} orders ({dist.Percentage}%)");
                 }
+
+                var loyalCustomers = customers
+                    .Select(c => new
+                    {
+                        c.Name,
+                        c.Phone,
+                        c.TotalVisits,
+                        DaysSinceFirstVisit = (DateTime.Now - c.FirstVisit).Days,
+                        TotalSpent = orders
+                            .Where(o => o.CustomerId == c.Id)
+                            .Sum(o => o.TotalAmount),
+                        AverageSpent = orders
+                            .Where(o => o.CustomerId == c.Id)
+                            .Average(o => o.TotalAmount)
+                    })
+                    .Where(c => c.TotalVisits > 1)
+                    .OrderByDescending(c => c.TotalVisits)
+                    .ToList();
+
+                Console.WriteLine("\n=== Loyal Customers ===");
+                foreach (var customer in loyalCustomers)
+                {
+                    Console.WriteLine($"{customer.Name} ({customer.Phone}):");
+                    Console.WriteLine($"  Visits: {customer.TotalVisits}, Customer for: {customer.DaysSinceFirstVisit} days");
+                    Console.WriteLine($"  Total Spent: {customer.TotalSpent:C0}");
+                    Console.WriteLine($"  Average per Visit: {customer.AverageSpent:C0}");
+                }
+
             }
         }
 
