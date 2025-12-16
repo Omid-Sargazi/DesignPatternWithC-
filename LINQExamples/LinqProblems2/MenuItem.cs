@@ -338,6 +338,29 @@ namespace LINQExamples.LinqProblems2
                 Console.WriteLine($"Today's Revenue: {restaurantStats.TodayRevenue:C0}");
                 Console.WriteLine($"Average Order Value: {restaurantStats.AverageOrderValue:C0}");
 
+
+                var menuByCategory = menuItems
+                    .Where(m => m.IsAvailable)
+                    .GroupBy(m => m.Category)
+                    .Select(g => new
+                    {
+                        Category = g.Key,
+                        ItemCount = g.Count(),
+                        AveragePrice = Math.Round(g.Average(m => m.Price), 0),
+                        AveragePrepTime = Math.Round(g.Average(m => m.PreparationTime), 1)
+                    })
+                    .OrderByDescending(g => g.ItemCount)
+                    .ToList();
+
+                Console.WriteLine("\n=== Menu by Category ===");
+                foreach (var category in menuByCategory)
+                {
+                    Console.WriteLine($"{category.Category}:");
+                    Console.WriteLine($"  Items: {category.ItemCount}");
+                    Console.WriteLine($"  Avg Price: {category.AveragePrice:C0}");
+                    Console.WriteLine($"  Avg Prep Time: {category.AveragePrepTime} minutes");
+                }
+
             }
         }
 
