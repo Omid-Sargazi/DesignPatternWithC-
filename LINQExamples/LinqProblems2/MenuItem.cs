@@ -169,6 +169,36 @@ namespace LINQExamples.LinqProblems2
                 Console.WriteLine($"  Orders: {item.OrderCount}, Revenue: {item.TotalRevenue:C0}");
                
             }
+
+            var availableTables = tables
+                .Where(t => !t.IsOccupied)
+                .OrderBy(t => t.Capacity)
+                .Select(t => new
+                {
+                    t.TableNumber,
+                    t.Capacity,
+                    t.Location,
+                    RecommendedFor = t.Capacity <= 2 ? "Couples" :
+                        t.Capacity <= 4 ? "Small Families" :
+                        t.Capacity <= 6 ? "Large Groups" : "Events"
+                })
+                .ToList();
+
+            Console.WriteLine("\n=== Available Tables ===");
+            if (availableTables.Any())
+            {
+                foreach (var table in availableTables)
+                {
+                    Console.WriteLine($"Table {table.TableNumber}:");
+                    Console.WriteLine($"  Capacity: {table.Capacity} people");
+                    Console.WriteLine($"  Location: {table.Location}");
+                    Console.WriteLine($"  Recommended for: {table.RecommendedFor}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No tables available at the moment.");
+            }
         }
 
     }
