@@ -199,6 +199,37 @@ namespace LINQExamples.LinqProblems2
             {
                 Console.WriteLine("No tables available at the moment.");
             }
+
+            var activeOrders = orders
+                .Where(o => o.Status != "Paid")
+                .OrderBy(o => o.OrderTime)
+                .Select(o => new
+                {
+                    OrderId = o.Id,
+                    Table = tables.First(t => t.Id == o.TableId).TableNumber,
+                    Customer = customers.First(c => c.Id == o.CustomerId).Name,
+                    Status = o.Status,
+                    OrderAge = (DateTime.Now - o.OrderTime).TotalMinutes,
+                    Items = orderItems
+                        .Where(oi => oi.OrderId == o.Id)
+                        .Select(oi => new
+                        {
+                            Item = menuItems.First(m => m.Id == oi.MenuItemId).Name,
+                            oi.Quantity
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            Console.WriteLine("\n=== Active Orders ===");
+            foreach (var order in activeOrders)
+            {
+                Console.WriteLine($"Order #{order.OrderId} (Table {order.Table}):");
+                Console.WriteLine($"  Customer: {order.Customer}, Status: {order.Status}");
+                Console.WriteLine($"  Waiting: {order.OrderAge:F0} minutes");
+                Console.Write("  Items: ");
+                Console.WriteLine(string.Join(", ", order.Items.Select(i => $"{i.Item} x{i.Quantity}")));
+            }
         }
 
     }
