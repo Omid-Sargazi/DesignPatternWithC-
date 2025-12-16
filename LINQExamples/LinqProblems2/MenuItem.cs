@@ -298,6 +298,27 @@ namespace LINQExamples.LinqProblems2
                     Console.WriteLine($"  Average per Visit: {customer.AverageSpent:C0}");
                 }
 
+                var todayOrders = orders
+                    .Where(o => o.OrderTime.Date == DateTime.Today)
+                    .GroupBy(o => o.Status)
+                    .Select(g => new
+                    {
+                        Status = g.Key,
+                        Count = g.Count(),
+                        TotalAmount = g.Sum(o => o.TotalAmount),
+                        AverageGuests = Math.Round(g.Average(o => o.NumberOfGuests), 1)
+                    })
+                    .OrderByDescending(g => g.Count)
+                    .ToList();
+
+                Console.WriteLine("\n=== Today's Orders ===");
+                foreach (var status in todayOrders)
+                {
+                    Console.WriteLine($"{status.Status}: {status.Count} orders");
+                    Console.WriteLine($"  Total Amount: {status.TotalAmount:C0}");
+                    Console.WriteLine($"  Average Guests: {status.AverageGuests}");
+                }
+
             }
         }
 
