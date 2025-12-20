@@ -278,6 +278,27 @@ namespace LINQProblems.IncomeManagment
                 Console.WriteLine("⚖️ You're breaking even this month.");
             }
 
+            var paymentMethods = expenses
+                .Where(e => e.Date.Month == currentMonth && e.Date.Year == currentYear)
+                .GroupBy(e => e.PaymentMethod)
+                .Select(g => new
+                {
+                    Method = g.Key,
+                    TotalAmount = g.Sum(e => e.Amount),
+                    Count = g.Count(),
+                    Percentage = Math.Round((double)g.Sum(e => e.Amount) / currentMonthTotalExpenses * 100, 1)
+                })
+                .OrderByDescending(p => p.TotalAmount)
+                .ToList();
+
+            Console.WriteLine("\n=== Payment Methods Usage ===");
+            foreach (var method in paymentMethods)
+            {
+                Console.WriteLine($"{method.Method}:");
+                Console.WriteLine($"  Amount: {method.TotalAmount:C0} ({method.Percentage}%)");
+                Console.WriteLine($"  Transactions: {method.Count}");
+            }
+
         }
     }
 }
