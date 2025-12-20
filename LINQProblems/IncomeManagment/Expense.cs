@@ -221,6 +221,33 @@ namespace LINQProblems.IncomeManagment
                 Console.WriteLine($"  Top Category: {month.Categories}");
             }
 
+
+            var futureProjections = categories
+                .Select(c => new
+                {
+                    c.Name,
+                    RecurringExpenses = expenses
+                        .Where(e => e.Category == c.Name && e.IsRecurring)
+                        .Average(e => e.Amount),
+                    DaysUntilMonthEnd = DateTime.DaysInMonth(currentYear, currentMonth) - DateTime.Now.Day
+                })
+                .Where(x => x.RecurringExpenses > 0)
+                .Select(x => new
+                {
+                    x.Name,
+                    ProjectedAmount = Math.Round(x.RecurringExpenses * 2), // Assuming 2 more recurring payments
+                    Confidence = "HIGH" // Because they're recurring
+                })
+                .ToList();
+
+            Console.WriteLine("\n=== Future Expense Projections ===");
+            foreach (var projection in futureProjections)
+            {
+                Console.WriteLine($"{projection.Name}:");
+                Console.WriteLine($"  Projected: {projection.ProjectedAmount:C0}");
+                Console.WriteLine($"  Confidence: {projection.Confidence}");
+            }
+
         }
     }
 }
