@@ -189,6 +189,38 @@ namespace LINQProblems.IncomeManagment
                 Console.WriteLine($"  Daily Avg: {budget.DailyAverageSpent:C0}");
                 Console.WriteLine($"  Projected: {budget.ProjectedMonthEnd:C0} {trend}");
             }
+            var monthlyTrends = expenses
+                .GroupBy(e => new { e.Date.Year, e.Date.Month })
+                .Select(g => new
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalExpenses = g.Sum(e => e.Amount),
+                    ExpenseCount = g.Count(),
+                    AveragePerExpense = Math.Round(g.Average(e => e.Amount), 0),
+                    Categories = g.GroupBy(e => e.Category)
+                        .Select(cg => new
+                        {
+                            Category = cg.Key,
+                            Amount = cg.Sum(e => e.Amount)
+                        })
+                        .OrderByDescending(c => c.Amount)
+                        .FirstOrDefault()?.Category ?? "N/A"
+                })
+                .OrderByDescending(m => m.Year)
+                .ThenByDescending(m => m.Month)
+                .Take(3)
+                .ToList();
+
+            Console.WriteLine("\n=== Monthly Expense Trends ===");
+            foreach (var month in monthlyTrends)
+            {
+                Console.WriteLine($"{month.Year}-{month.Month:D2}:");
+                Console.WriteLine($"  Total: {month.TotalExpenses:C0}");
+                Console.WriteLine($"  Expenses: {month.ExpenseCount}, Avg: {month.AveragePerExpense:C0}");
+                Console.WriteLine($"  Top Category: {month.Categories}");
+            }
+
         }
     }
 }
