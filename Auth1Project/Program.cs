@@ -48,7 +48,7 @@ namespace Auth1Project
                 options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
 
                 options.AddPolicy("RequireEmail", policy => policy.RequireClaim(ClaimTypes.Email));
-                options.AddPolicy("Over18", policy => policy.Requirements.Add(new MinimumAgeRequirement(18)));
+                //options.AddPolicy("Over18", policy => policy.Requirements.Add(new MinimumAgeRequirement(18)));
             });
             builder.Services.AddOpenApi();
 

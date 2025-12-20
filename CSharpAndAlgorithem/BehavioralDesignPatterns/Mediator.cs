@@ -187,5 +187,5 @@ namespace CSharpAndAlgorithem.BehavioralDesignPatterns
             throw new InvalidOperationException("Handler did not return expected task type");
         }
     }
-    }
+    
 }

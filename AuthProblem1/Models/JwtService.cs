@@ -8,6 +8,7 @@ namespace AuthProblem1.Models
     public class JwtService
     {
         private readonly IConfiguration _configuration;
+
         public JwtService(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -39,4 +40,5 @@ namespace AuthProblem1.Models
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+    }
 }

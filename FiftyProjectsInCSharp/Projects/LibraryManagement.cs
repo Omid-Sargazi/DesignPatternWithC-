@@ -133,9 +133,9 @@ namespace FiftyProjectsInCSharp.Projects
         }
 
 
-        public bool Handle(BorrowBookCommand command)
-        {
-            ///////Complete 
-        }
+        //public bool Handle(BorrowBookCommand command)
+        //{
+        //    ///////Complete 
+        //}
     }
 }
