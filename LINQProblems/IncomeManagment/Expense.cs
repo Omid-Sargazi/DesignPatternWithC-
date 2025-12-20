@@ -248,6 +248,36 @@ namespace LINQProblems.IncomeManagment
                 Console.WriteLine($"  Confidence: {projection.Confidence}");
             }
 
+            var currentMonthIncome = incomes
+                .Where(i => i.Date.Month == currentMonth && i.Date.Year == currentYear)
+                .Sum(i => i.Amount);
+
+            var currentMonthTotalExpenses = expenses
+                .Where(e => e.Date.Month == currentMonth && e.Date.Year == currentYear)
+                .Sum(e => e.Amount);
+
+            var savings = currentMonthIncome - currentMonthTotalExpenses;
+            var savingsRate = currentMonthIncome > 0 ?
+                Math.Round(savings / currentMonthIncome * 100, 1) : 0;
+
+            Console.WriteLine("\n=== Income vs Expenses (Current Month) ===");
+            Console.WriteLine($"Total Income: {currentMonthIncome:C0}");
+            Console.WriteLine($"Total Expenses: {currentMonthTotalExpenses:C0}");
+            Console.WriteLine($"Savings: {savings:C0} ({savingsRate}%)");
+
+            if (savings > 0)
+            {
+                Console.WriteLine("✅ You're saving money this month!");
+            }
+            else if (savings < 0)
+            {
+                Console.WriteLine("⚠️ You're spending more than you earn!");
+            }
+            else
+            {
+                Console.WriteLine("⚖️ You're breaking even this month.");
+            }
+
         }
     }
 }
