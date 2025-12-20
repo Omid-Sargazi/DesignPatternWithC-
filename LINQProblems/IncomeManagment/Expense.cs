@@ -286,7 +286,7 @@ namespace LINQProblems.IncomeManagment
                     Method = g.Key,
                     TotalAmount = g.Sum(e => e.Amount),
                     Count = g.Count(),
-                    Percentage = Math.Round((double)g.Sum(e => e.Amount) / currentMonthTotalExpenses * 100, 1)
+                    //Percentage = Math.Round((double)g.Sum(e => e.Amount) / currentMonthTotalExpenses * 100, 1)
                 })
                 .OrderByDescending(p => p.TotalAmount)
                 .ToList();
@@ -295,8 +295,30 @@ namespace LINQProblems.IncomeManagment
             foreach (var method in paymentMethods)
             {
                 Console.WriteLine($"{method.Method}:");
-                Console.WriteLine($"  Amount: {method.TotalAmount:C0} ({method.Percentage}%)");
+                //Console.WriteLine($"  Amount: {method.TotalAmount:C0} ({method.Percentage}%)");
                 Console.WriteLine($"  Transactions: {method.Count}");
+            }
+
+            var recurringExpenses = expenses
+                .Where(e => e.IsRecurring)
+                .GroupBy(e => e.Category)
+                .Select(g => new
+                {
+                    Category = g.Key,
+                    MonthlyTotal = g.Sum(e => e.Amount),
+                    AverageAmount = Math.Round(g.Average(e => e.Amount), 0),
+                    NextDue = g.Max(e => e.Date).AddMonths(1).ToString("dd MMM")
+                })
+                .OrderByDescending(r => r.MonthlyTotal)
+                .ToList();
+
+            Console.WriteLine("\n=== Recurring Expenses ===");
+            foreach (var recurring in recurringExpenses)
+            {
+                Console.WriteLine($"{recurring.Category}:");
+                Console.WriteLine($"  Monthly: {recurring.MonthlyTotal:C0}");
+                Console.WriteLine($"  Avg per expense: {recurring.AverageAmount:C0}");
+                Console.WriteLine($"  Next due: ~{recurring.NextDue}");
             }
 
         }
