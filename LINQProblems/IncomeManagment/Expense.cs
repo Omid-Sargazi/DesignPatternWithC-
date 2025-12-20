@@ -117,6 +117,41 @@ namespace LINQProblems.IncomeManagment
                 Console.WriteLine($"  Category: {expense.Category}, Amount: {expense.Amount:C0}");
                 Console.WriteLine($"  Payment: {expense.PaymentMethod}, {expense.DaysAgo} days ago");
             }
+
+            var expensesByCategory = expenses
+                .Where(e => e.Date.Month == currentMonth && e.Date.Year == currentYear)
+                .GroupBy(e => e.Category)
+                .Select(g => new
+                {
+                    Category = g.Key,
+                    TotalAmount = g.Sum(e => e.Amount),
+                    Count = g.Count(),
+                    AverageAmount = Math.Round(g.Average(e => e.Amount), 0),
+                    Budget = categories.FirstOrDefault(c => c.Name == g.Key)?.MonthlyBudget ?? 0
+                })
+                .Select(x => new
+                {
+                    x.Category,
+                    x.TotalAmount,
+                    x.Count,
+                    x.AverageAmount,
+                    x.Budget,
+                    BudgetUsed = Math.Round(x.TotalAmount / x.Budget * 100, 1),
+                    Status = x.TotalAmount > x.Budget ? "OVER BUDGET" :
+                        x.TotalAmount > x.Budget * 0.8 ? "WARNING" : "OK"
+                })
+                .OrderByDescending(x => x.TotalAmount)
+                .ToList();
+
+            Console.WriteLine("\n=== Expenses by Category (Current Month) ===");
+            foreach (var category in expensesByCategory)
+            {
+                Console.WriteLine($"{category.Category}:");
+                Console.WriteLine($"  Spent: {category.TotalAmount:C0} ({category.Count} expenses)");
+                Console.WriteLine($"  Avg per expense: {category.AverageAmount:C0}");
+                Console.WriteLine($"  Budget: {category.Budget:C0}, Used: {category.BudgetUsed}%");
+                Console.WriteLine($"  Status: {category.Status}");
+            }
         }
     }
 }
