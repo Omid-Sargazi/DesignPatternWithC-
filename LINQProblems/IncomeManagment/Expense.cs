@@ -92,6 +92,31 @@ namespace LINQProblems.IncomeManagment
             new Expense { Id = 14, Description = "Water bill", Category = "Bills", Amount = 90000,
                          Date = DateTime.Now.AddDays(-1), PaymentMethod = "Online", IsRecurring = true }
         };
+
+            var currentMonth = DateTime.Now.Month;
+            var currentYear = DateTime.Now.Year;
+
+            var currentMonthExpenses = expenses
+                .Where(e => e.Date.Month == currentMonth && e.Date.Year == currentYear)
+                .OrderByDescending(e => e.Amount)
+                .Select(e => new
+                {
+                    e.Description,
+                    e.Category,
+                    e.Amount,
+                    e.Date,
+                    e.PaymentMethod,
+                    DaysAgo = (DateTime.Now - e.Date).Days
+                })
+                .ToList();
+
+            Console.WriteLine($"=== Current Month Expenses ({DateTime.Now:MMMM}) ===");
+            foreach (var expense in currentMonthExpenses)
+            {
+                Console.WriteLine($"{expense.Date:dd MMM}: {expense.Description}");
+                Console.WriteLine($"  Category: {expense.Category}, Amount: {expense.Amount:C0}");
+                Console.WriteLine($"  Payment: {expense.PaymentMethod}, {expense.DaysAgo} days ago");
+            }
         }
     }
 }
