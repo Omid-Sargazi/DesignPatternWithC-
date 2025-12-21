@@ -203,7 +203,33 @@ namespace LINQProblems.ManageFilms
                     series.First(s => s.Id == analysis.HighestRated.SeriesId).Title;
                 Console.WriteLine($"  Highest: {title} ({analysis.HighestRated.Score}/10)");
             }
-        }
+
+            var weeklyWatchTime = watchSessions
+                .Where(ws => ws.StartTime >= DateTime.Now.AddDays(-7))
+                .GroupBy(ws => ws.StartTime.Date)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    TotalMinutes = Math.Round(g.Sum(ws => (ws.EndTime - ws.StartTime).TotalMinutes), 0),
+                    Sessions = g.Count(),
+                    Content = g.Select(ws => ws.MovieId.HasValue ?
+                            movies.First(m => m.Id == ws.MovieId).Title :
+                            series.First(s => s.Id == ws.SeriesId).Title)
+                        .Distinct()
+                        .ToList()
+                })
+                .OrderByDescending(d => d.Date)
+                .ToList();
+
+            Console.WriteLine("\n=== Weekly Watch Time ===");
+            foreach (var day in weeklyWatchTime)
+            {
+                Console.WriteLine($"{day.Date:ddd, MMM dd}:");
+                Console.WriteLine($"  Time: {day.TotalMinutes} minutes ({Math.Round(day.TotalMinutes / 60.0, 1)} hours)");
+                Console.WriteLine($"  Sessions: {day.Sessions}");
+                Console.WriteLine($"  Content: {string.Join(", ", day.Content)}");
+            }
+            }
         }
         }
 }
