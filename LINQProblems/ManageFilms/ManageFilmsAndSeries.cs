@@ -176,6 +176,34 @@ namespace LINQProblems.ManageFilms
             Console.WriteLine($"  Watched: {show.EpisodesWatched}/{show.TotalEpisodes} episodes");
             Console.WriteLine($"  Remaining: {show.EpisodesLeft} episodes");
         }
+
+        var ratingAnalysis = ratings
+            .GroupBy(r => r.Type)
+            .Select(g => new
+            {
+                Type = g.Key,
+                AverageRating = Math.Round(g.Average(r => r.Score), 1),
+                Count = g.Count(),
+                HighestRated = g.OrderByDescending(r => r.Score).FirstOrDefault(),
+                LowestRated = g.OrderBy(r => r.Score).FirstOrDefault()
+            })
+            .ToList();
+
+        Console.WriteLine("\n=== Rating Analysis ===");
+        foreach (var analysis in ratingAnalysis)
+        {
+            Console.WriteLine($"{analysis.Type}s:");
+            Console.WriteLine($"  Average Rating: {analysis.AverageRating}/10");
+            Console.WriteLine($"  Total Ratings: {analysis.Count}");
+
+            if (analysis.HighestRated != null)
+            {
+                string title = analysis.HighestRated.MovieId.HasValue ?
+                    movies.First(m => m.Id == analysis.HighestRated.MovieId).Title :
+                    series.First(s => s.Id == analysis.HighestRated.SeriesId).Title;
+                Console.WriteLine($"  Highest: {title} ({analysis.HighestRated.Score}/10)");
+            }
+        }
         }
         }
 }
