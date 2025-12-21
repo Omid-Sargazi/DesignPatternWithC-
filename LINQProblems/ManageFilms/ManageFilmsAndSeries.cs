@@ -152,6 +152,30 @@ namespace LINQProblems.ManageFilms
             Console.WriteLine($"  Rating: {stars} ({movie.Rating}/10)");
             Console.WriteLine($"  Comment: {movie.Comment}");
         }
+
+        var watchingSeries = series
+            .Where(s => s.Status == "Watching")
+            .Select(s => new
+            {
+                s.Title,
+                s.Genre,
+                Progress = Math.Round((double)((s.CurrentSeason - 1) * s.TotalEpisodes / s.TotalSeasons + s.CurrentEpisode) /
+                    s.TotalEpisodes * 100, 1),
+                Current = $"S{s.CurrentSeason}E{s.CurrentEpisode}",
+                EpisodesWatched = (s.CurrentSeason - 1) * (s.TotalEpisodes / s.TotalSeasons) + s.CurrentEpisode,
+                s.TotalEpisodes,
+                EpisodesLeft = s.TotalEpisodes - ((s.CurrentSeason - 1) * (s.TotalEpisodes / s.TotalSeasons) + s.CurrentEpisode)
+            })
+            .ToList();
+
+        Console.WriteLine("\n=== Currently Watching Series ===");
+        foreach (var show in watchingSeries)
+        {
+            Console.WriteLine($"{show.Title} ({show.Genre})");
+            Console.WriteLine($"  Progress: {show.Progress}% ({show.Current})");
+            Console.WriteLine($"  Watched: {show.EpisodesWatched}/{show.TotalEpisodes} episodes");
+            Console.WriteLine($"  Remaining: {show.EpisodesLeft} episodes");
+        }
         }
         }
 }
