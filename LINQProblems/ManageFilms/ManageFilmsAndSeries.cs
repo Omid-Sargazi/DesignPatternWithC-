@@ -302,6 +302,37 @@ namespace LINQProblems.ManageFilms
             Console.WriteLine($"Average Series Rating: {stats.AverageSeriesRating}/10");
 
             }
+
+        var watchHistory = watchSessions
+            .OrderByDescending(ws => ws.StartTime)
+            .Take(5)
+            .Select(ws => new
+            {
+                Content = ws.MovieId.HasValue ?
+                    movies.First(m => m.Id == ws.MovieId).Title :
+                    series.First(s => s.Id == ws.SeriesId).Title,
+                Type = ws.Type,
+                Date = ws.StartTime.ToString("MMM dd, HH:mm"),
+                Duration = Math.Round((ws.EndTime - ws.StartTime).TotalMinutes, 0)
+            })
+            .ToList();
+
+        Console.WriteLine("\n=== Recent Watch History ===");
+        foreach (var item in watchHistory)
+        {
+            Console.WriteLine($"{item.Date}: {item.Content} ({item.Type}) - {item.Duration} min");
         }
+            }
+        }
+
+        // Extension method to determine type of rating
+        public static class RatingExtensions
+        {
+            public static string Type(this Rating rating)
+            {
+                return rating.MovieId.HasValue ? "Movie" : "Series";
+            }
+        }
+}
         }
 }
