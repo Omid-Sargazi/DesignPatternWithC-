@@ -127,6 +127,31 @@ namespace LINQProblems.ManageFilms
             new Rating { Id = 5, SeriesId = 2, MovieId = null, Score = 9,
                         RatingDate = new DateTime(2024, 1, 30), Comment = "Nostalgic and exciting" }
         };
+
+        var watchedMovies = movies
+            .Where(m => m.Status == "Watched")
+            .OrderByDescending(m => m.WatchedDate)
+            .Select(m => new
+            {
+                m.Title,
+                m.Genre,
+                m.Year,
+                m.Duration,
+                WatchDate = m.WatchedDate?.ToString("yyyy-MM-dd") ?? "Not watched",
+                Rating = ratings.FirstOrDefault(r => r.MovieId == m.Id)?.Score ?? 0,
+                Comment = ratings.FirstOrDefault(r => r.MovieId == m.Id)?.Comment ?? "No rating"
+            })
+            .ToList();
+
+        Console.WriteLine("=== Watched Movies ===");
+        foreach (var movie in watchedMovies)
+        {
+            string stars = new string('★', movie.Rating / 2) + new string('☆', 5 - movie.Rating / 2);
+            Console.WriteLine($"{movie.Title} ({movie.Year}) - {movie.Genre}");
+            Console.WriteLine($"  Duration: {movie.Duration} min, Watched: {movie.WatchDate}");
+            Console.WriteLine($"  Rating: {stars} ({movie.Rating}/10)");
+            Console.WriteLine($"  Comment: {movie.Comment}");
+        }
         }
         }
 }
