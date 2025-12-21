@@ -280,6 +280,27 @@ namespace LINQProblems.ManageFilms
                 }
             }
 
+            var stats = new
+            {
+                TotalMovies = movies.Count,
+                WatchedMovies = movies.Count(m => m.Status == "Watched"),
+                TotalSeries = series.Count,
+                WatchingSeries = series.Count(s => s.Status == "Watching"),
+                CompletedSeries = series.Count(s => s.Status == "Completed"),
+                TotalWatchTime = Math.Round(watchSessions.Sum(ws => (ws.EndTime - ws.StartTime).TotalHours), 1),
+                AverageMovieRating = ratings.Where(r => r.MovieId.HasValue).Any() ?
+                    Math.Round(ratings.Where(r => r.MovieId.HasValue).Average(r => r.Score), 1) : 0,
+                AverageSeriesRating = ratings.Where(r => r.SeriesId.HasValue).Any() ?
+                    Math.Round(ratings.Where(r => r.SeriesId.HasValue).Average(r => r.Score), 1) : 0
+            };
+
+            Console.WriteLine("\n=== Overall Statistics ===");
+            Console.WriteLine($"Movies: {stats.WatchedMovies}/{stats.TotalMovies} watched");
+            Console.WriteLine($"Series: {stats.WatchingSeries} watching, {stats.CompletedSeries} completed out of {stats.TotalSeries}");
+            Console.WriteLine($"Total Watch Time: {stats.TotalWatchTime} hours");
+            Console.WriteLine($"Average Movie Rating: {stats.AverageMovieRating}/10");
+            Console.WriteLine($"Average Series Rating: {stats.AverageSeriesRating}/10");
+
             }
         }
         }
