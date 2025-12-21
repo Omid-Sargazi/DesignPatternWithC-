@@ -229,6 +229,57 @@ namespace LINQProblems.ManageFilms
                 Console.WriteLine($"  Sessions: {day.Sessions}");
                 Console.WriteLine($"  Content: {string.Join(", ", day.Content)}");
             }
+
+            var favoriteGenre = movies
+                .Where(m => m.Status == "Watched")
+                .Concat(series.Where(s => s.Status == "Completed" || s.Status == "Watching")
+                    .Select(s => new Movie
+                    {
+                        Title = s.Title,
+                        Genre = s.Genre,
+                        Status = s.Status
+                    }))
+                .GroupBy(x => x.Genre)
+                .Select(g => new
+                {
+                    Genre = g.Key,
+                    Count = g.Count(),
+                    AverageRating = Math.Round(ratings
+                        .Where(r => g.Any(item =>
+                            (r.MovieId.HasValue && movies.Any(m => m.Id == r.MovieId && m.Genre == g.Key)) ||
+                            (r.SeriesId.HasValue && series.Any(s => s.Id == r.SeriesId && s.Genre == g.Key))))
+                        .Average(r => r.Score), 1)
+                })
+                .OrderByDescending(g => g.Count)
+                .FirstOrDefault();
+
+            if (favoriteGenre != null)
+            {
+                Console.WriteLine($"\n=== Recommendations Based on Your Favorite Genre: {favoriteGenre.Genre} ===");
+
+                var recommendations = movies
+                    .Where(m => m.Genre == favoriteGenre.Genre && m.Status == "To Watch")
+                    .Take(3)
+                    .Select(m => m.Title)
+                    .ToList();
+
+                if (recommendations.Any())
+                {
+                    Console.WriteLine($"Movies to watch: {string.Join(", ", recommendations)}");
+                }
+
+                var seriesRecs = series
+                    .Where(s => s.Genre == favoriteGenre.Genre && s.Status == "To Watch")
+                    .Take(2)
+                    .Select(s => s.Title)
+                    .ToList();
+
+                if (seriesRecs.Any())
+                {
+                    Console.WriteLine($"Series to watch: {string.Join(", ", seriesRecs)}");
+                }
+            }
+
             }
         }
         }
