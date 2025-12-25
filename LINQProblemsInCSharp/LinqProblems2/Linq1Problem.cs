@@ -13,10 +13,21 @@ namespace LINQProblemsInCSharp.LinqProblems2
             int[] numbers = { 5, 2, 9, 8, 3, 6, 1, 4, 7 };
 
             var result1 = numbers.Where(n => n % 2 == 0).OrderBy(n => n);
+
+
             foreach (var res in result1)
             {
                 Console.WriteLine($"{res}");
             }
+
+            List<string> students = new List<string>
+            {
+                "Ali", "Mohammad", "Ahmad", "Sara", "Amir", "Fatemeh", "Armin"
+            };
+
+            var result2 = students.
+                Where(s => s.StartsWith("A", StringComparison.OrdinalIgnoreCase)).OrderBy(s => s);
+            Console.WriteLine(string.Join(", ",result2));
         }
     }
 }
