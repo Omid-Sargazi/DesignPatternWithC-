@@ -1,4 +1,5 @@
-﻿using LINQProblemsInCSharp.Problems1;
+﻿using LINQProblemsInCSharp.LinqProblems2;
+using LINQProblemsInCSharp.Problems1;
 
 namespace LINQProblemsInCSharp
 {
@@ -10,8 +11,10 @@ namespace LINQProblemsInCSharp
             //DelegateExample example = new DelegateExample();
             //example.Run(3,2);
 
-            DelegateExample2 delegateExample2 = new DelegateExample2();
-            delegateExample2.Run(7,2,(x,y)=>x);
+            //DelegateExample2 delegateExample2 = new DelegateExample2();
+            //delegateExample2.Run(7,2,(x,y)=>x);
+
+            Linq1Problem.Execute();
         }
     }
 }
