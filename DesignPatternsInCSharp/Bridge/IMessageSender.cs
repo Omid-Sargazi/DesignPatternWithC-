@@ -22,4 +22,26 @@ namespace DesignPatternsInCSharp.Bridge
         public void SendMessage(string title, string body)
             => Console.WriteLine($"[SMS] {title}: {body}");
     }
+
+    public abstract class Message
+    {
+        protected IMessageSender _sender;
+        public Message(IMessageSender sender) => _sender = sender;
+        public abstract void Send(string content);
+    }
+
+    public class UrgentMessage : Message
+    {
+        public UrgentMessage(IMessageSender sender) : base(sender) { }
+        public override void Send(string content)
+            => _sender.SendMessage("🚨 URGENT", content);
+    }
+
+    public class NormalMessage : Message
+    {
+        public NormalMessage(IMessageSender sender) : base(sender) { }
+        public override void Send(string content)
+            => _sender.SendMessage("Info", content);
+    }
+
 }
