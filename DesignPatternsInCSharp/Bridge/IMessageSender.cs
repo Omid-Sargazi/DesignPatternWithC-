@@ -10,4 +10,16 @@ namespace DesignPatternsInCSharp.Bridge
     {
         void SendMessage(string title, string body);
     }
+
+    public class EmailSender : IMessageSender
+    {
+        public void SendMessage(string title, string body)
+            => Console.WriteLine($"[EMAIL] Subject: {title}\nBody: {body}");
+    }
+
+    public class SmsSender : IMessageSender
+    {
+        public void SendMessage(string title, string body)
+            => Console.WriteLine($"[SMS] {title}: {body}");
+    }
 }
