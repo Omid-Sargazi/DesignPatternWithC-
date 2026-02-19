@@ -28,4 +28,39 @@ namespace DesignPatternsInCSharp.Bridge
             return true;
         }
     }
+
+    public abstract class Order
+    {
+        protected IPaymentGateway2 _gateway;
+        protected decimal _amount;
+
+        public Order(IPaymentGateway2 gateway, decimal amount)
+        {
+            _gateway = gateway;
+            _amount = amount;
+        }
+
+        public abstract void Checkout(string cardInfo);
+    }
+
+    public class OnlineOrder : Order
+    {
+        public OnlineOrder(IPaymentGateway2 gateway, decimal amount) : base(gateway, amount) { }
+        public override void Checkout(string cardInfo)
+        {
+            Console.WriteLine("سفارش آنلاین:");
+            _gateway.Pay(_amount, cardInfo);
+        }
+    }
+
+    public class InStoreOrder : Order
+    {
+        public InStoreOrder(IPaymentGateway2 gateway, decimal amount) : base(gateway, amount) { }
+        public override void Checkout(string cardInfo)
+        {
+            Console.WriteLine("سفارش حضوری:");
+            _gateway.Pay(_amount * 0.95m, cardInfo); // 5% تخفیف حضوری
+        }
+    }
+
 }
