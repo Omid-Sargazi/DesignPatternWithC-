@@ -10,3 +10,5 @@ namespace DesignPatternsInCSharp.Composition
     public class BasicPaymentProcessor : IPaymentProcessor { public void Process(decimal amount) { Console.WriteLine($"Processing payment: {amount}"); } }
     public class LoggingDecorator : IPaymentProcessor { private readonly IPaymentProcessor _processor; public LoggingDecorator(IPaymentProcessor processor) { _processor = processor; } public void Process(decimal amount) { Console.WriteLine("Logging payment..."); _processor.Process(amount); } }
 }
+
+
